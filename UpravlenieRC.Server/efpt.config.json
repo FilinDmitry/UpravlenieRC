@@ -1,0 +1,142 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "RC_SkladContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "MinimumProductVersion": "2.6.1093",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "UpravlenieRC.Server",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[arrival]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cellBalance]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[directionPoint]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[driver]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[goods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[internalMovement]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[manufacturer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[outbound]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[partner]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[returnArrival]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[returnOutbound]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[returns]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[status]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[storageCell]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tovar]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tovar_arrival]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tovar_cell_history]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tovar_internalMovenent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tovar_outbound]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tovar_return]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tovarCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[units]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[user]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[userType]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false
+}
