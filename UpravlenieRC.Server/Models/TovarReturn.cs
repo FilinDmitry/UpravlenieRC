@@ -7,8 +7,6 @@ namespace UpravlenieRC.Server.Models;
 
 public partial class TovarReturn
 {
-    public int Id { get; set; }
-
     public int Tovar { get; set; }
 
     public int Returnid { get; set; }

@@ -18,4 +18,6 @@ public partial class InternalMovement
     public virtual StorageCell IdNewCellNavigation { get; set; }
 
     public virtual StorageCell IdOldCellNavigation { get; set; }
+
+    public virtual ICollection<TovarInternalMovenent> TovarInternalMovenents { get; set; } = new List<TovarInternalMovenent>();
 }

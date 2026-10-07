@@ -25,6 +25,8 @@ public partial class Tovar
 
     public virtual ICollection<TovarCellHistory> TovarCellHistories { get; set; } = new List<TovarCellHistory>();
 
+    public virtual ICollection<TovarInternalMovenent> TovarInternalMovenents { get; set; } = new List<TovarInternalMovenent>();
+
     public virtual ICollection<TovarOutbound> TovarOutbounds { get; set; } = new List<TovarOutbound>();
 
     public virtual ICollection<TovarReturn> TovarReturns { get; set; } = new List<TovarReturn>();

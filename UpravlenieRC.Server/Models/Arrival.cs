@@ -17,17 +17,19 @@ public partial class Arrival
 
     public int? DepartedFromid { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? ArrivedAt { get; set; }
 
-    public string CarPlate { get; set; }
+    public DateTime? AsseptedAt { get; set; }
 
     public int? Iddriver { get; set; }
 
     public int? IdAcceptanceClerk { get; set; }
 
     public string Notes { get; set; }
+
+    public string CarPlate { get; set; }
 
     public virtual User CreatorNavigation { get; set; }
 

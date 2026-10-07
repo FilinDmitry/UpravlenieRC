@@ -69,16 +69,18 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("arrival");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ArrivedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("arrivedAt");
+            entity.Property(e => e.AsseptedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("asseptedAt");
             entity.Property(e => e.CarPlate)
-                .HasMaxLength(255)
+                .HasMaxLength(18)
                 .HasColumnName("carPlate");
             entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("createdAt");
             entity.Property(e => e.Creator).HasColumnName("creator");
@@ -120,9 +122,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("cellBalance");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Idcell).HasColumnName("idcell");
             entity.Property(e => e.Idtovar).HasColumnName("idtovar");
@@ -144,9 +144,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("directionPoint");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address)
                 .IsRequired()
                 .HasMaxLength(255)
@@ -165,9 +163,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("driver");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Iduser).HasColumnName("iduser");
             entity.Property(e => e.Name)
                 .IsRequired()
@@ -185,9 +181,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("goods");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdCategory).HasColumnName("idCategory");
             entity.Property(e => e.Idmanufacturer).HasColumnName("idmanufacturer");
             entity.Property(e => e.Idunits).HasColumnName("idunits");
@@ -222,9 +216,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("internalMovement");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Date)
                 .HasColumnType("datetime")
                 .HasColumnName("date");
@@ -248,9 +240,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("manufacturer");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address)
                 .HasMaxLength(255)
                 .HasColumnName("address");
@@ -266,9 +256,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("outbound");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ArrivedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("arrivedAt");
@@ -276,6 +264,7 @@ public partial class RC_SkladContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("carPlate");
             entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("createdAt");
             entity.Property(e => e.Creator).HasColumnName("creator");
@@ -315,9 +304,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("partner");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address)
                 .IsRequired()
                 .HasMaxLength(255)
@@ -339,7 +326,7 @@ public partial class RC_SkladContext : DbContext
             entity.ToTable("returns");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.ReturnedAt)
                 .HasColumnType("datetime")
@@ -396,9 +383,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("status");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255)
@@ -411,9 +396,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("storageCell");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Column).HasColumnName("column");
             entity.Property(e => e.Maxvolume).HasColumnName("maxvolume");
             entity.Property(e => e.Maxweight).HasColumnName("maxweight");
@@ -429,9 +412,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("tovar");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.BatchNumber)
                 .HasMaxLength(255)
                 .HasColumnName("batchNumber");
@@ -453,9 +434,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("tovar_arrival");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Arrival).HasColumnName("arrival");
             entity.Property(e => e.Isgood).HasColumnName("isgood");
@@ -478,9 +457,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("tovarCategory");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255)
@@ -493,9 +470,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("tovar_cell_history");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Cell).HasColumnName("cell");
             entity.Property(e => e.Tovar).HasColumnName("tovar");
@@ -513,20 +488,20 @@ public partial class RC_SkladContext : DbContext
 
         modelBuilder.Entity<TovarInternalMovenent>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("tovar_internalMovenent");
+            entity.HasKey(e => new { e.Tovar, e.InternalMovement });
 
-            entity.Property(e => e.Amount).HasColumnName("amount");
-            entity.Property(e => e.InternalMovement).HasColumnName("internalMovement");
+            entity.ToTable("tovar_internalMovenent");
+
             entity.Property(e => e.Tovar).HasColumnName("tovar");
+            entity.Property(e => e.InternalMovement).HasColumnName("internalMovement");
+            entity.Property(e => e.Amount).HasColumnName("amount");
 
-            entity.HasOne(d => d.InternalMovementNavigation).WithMany()
+            entity.HasOne(d => d.InternalMovementNavigation).WithMany(p => p.TovarInternalMovenents)
                 .HasForeignKey(d => d.InternalMovement)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__tovar_int__inter__72C60C4A");
 
-            entity.HasOne(d => d.TovarNavigation).WithMany()
+            entity.HasOne(d => d.TovarNavigation).WithMany(p => p.TovarInternalMovenents)
                 .HasForeignKey(d => d.Tovar)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__tovar_int__tovar__6E01572D");
@@ -538,9 +513,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("tovar_outbound");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Isgood).HasColumnName("isgood");
             entity.Property(e => e.Outbound).HasColumnName("outbound");
@@ -559,16 +532,13 @@ public partial class RC_SkladContext : DbContext
 
         modelBuilder.Entity<TovarReturn>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tovar_re__3213E83F435CB203");
+            entity.HasKey(e => new { e.Tovar, e.Returnid });
 
             entity.ToTable("tovar_return");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.Amount).HasColumnName("amount");
-            entity.Property(e => e.Returnid).HasColumnName("returnid");
             entity.Property(e => e.Tovar).HasColumnName("tovar");
+            entity.Property(e => e.Returnid).HasColumnName("returnid");
+            entity.Property(e => e.Amount).HasColumnName("amount");
 
             entity.HasOne(d => d.Return).WithMany(p => p.TovarReturns)
                 .HasForeignKey(d => d.Returnid)
@@ -587,9 +557,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("units");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255)
@@ -602,9 +570,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("user");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(255)
@@ -639,9 +605,7 @@ public partial class RC_SkladContext : DbContext
 
             entity.ToTable("userType");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255)

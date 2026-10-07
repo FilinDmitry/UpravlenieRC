@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace UpravlenieRC.Server.Models;
 
-public partial class ReturnOutbound
+public partial class ReturnOutbound : Return
 {
-    public int Id { get; set; }
-
     public int Idoutbound { get; set; }
 
     public virtual Outbound IdoutboundNavigation { get; set; }
