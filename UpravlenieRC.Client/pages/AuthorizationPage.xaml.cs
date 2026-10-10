@@ -24,7 +24,7 @@ namespace UpravlenieRC.Client.pages
     {
         
         static HttpClient httpClient = new HttpClient();
-        
+        public record AuthRequest(string Login, string Password);
         public AuthorizationPage()
         {
             
@@ -39,9 +39,8 @@ namespace UpravlenieRC.Client.pages
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            JsonContent content = JsonContent.Create(new { Login = TB_Login.Text, Password = TB_password.Password });
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5152/api/auth");
-            HttpResponseMessage response = await httpClient.PostAsJsonAsync("http://localhost:5152/api/auth", content);
+            HttpResponseMessage response = await httpClient.PostAsJsonAsync("http://localhost:5152/api/auth", new AuthRequest(TB_Login.Text, TB_password.Password));
             MessageBox.Show(response.StatusCode.ToString());
         }
 
