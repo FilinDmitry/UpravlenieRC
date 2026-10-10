@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /UpravlenieRC.Server/AuthOptions.cs
 /UpravlenieRC.Server/Services/AuthOptions.cs
+/UpravlenieRC.Client/UpravlenieRC.ClientBeta.csproj
