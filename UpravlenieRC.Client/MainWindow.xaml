@@ -5,8 +5,104 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UpravlenieRC.Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Управление РЦ" Height="450" Width="800"
+        Icon="/res/images/Logo.png">
+    <Window.Resources>
+        <ImageBrush x:Key="TbBtn_MouseOver" ImageSource="/res/images/Logo.png"/>
+
+        <Style x:Key="TbBtn_Style" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="border" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource TbBtn_MouseOver}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TbBtn_MouseOver}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#252525">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="menu_column" Width="65"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Панель навигации -->
+        <Grid  x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="Gray">
+            <StackPanel x:Name="st_panel">
+                <ListView MouseEnter="ListV_MouseEnter" SelectionChanged="ListV_SelectionChanged"
+                          x:Name="ListV" BorderBrush="Transparent" Background="Transparent"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <!-- Кнопка открытия меню -->
+                    <ListViewItem x:Name="Menu" HorizontalAlignment="Left" Margin="0,0,0,15">
+                        
+                        <StackPanel  Orientation="Horizontal" Width="230">
+                            <ToggleButton Height="50" Width="50" x:Name="TgBtn"
+              Checked="TgBtn_Checked" Unchecked="TgBtn_Unchecked"
+              Style="{StaticResource TbBtn_Style}">
+                                <Image Source="/res/images/menu.jpg"/>
+
+                            </ToggleButton>
+                            <TextBlock Foreground="White" Background="Transparent" FontSize="20"
+               HorizontalAlignment="Left" VerticalAlignment="Center"
+               Text="Профиль" Margin="13,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <!-- Пункт "Профиль" (видимый всегда, но логически часть меню) -->
+                    <ListViewItem x:Name="El1" HorizontalAlignment="Left" Margin="0,0,0,15">
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image Height="50" Width="50" Source="/res/images/menu.jpg"/>
+                            <TextBlock Foreground="White" Background="Transparent" FontSize="20"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                                       Text="Профиль" Margin="13,0,0,0"/>
+                        </StackPanel>
+                        <ListViewItem.ToolTip>
+                            <ToolTip x:Name="tt1" Content="Профиль"/>
+                        </ListViewItem.ToolTip>
+                    </ListViewItem>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border x:Name="Bd" Height="70" Padding="{TemplateBinding Padding}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Background="{TemplateBinding Background}"
+                                                SnapsToDevicePixels="True">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" TargetName="Bd" Value="DarkGray"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+                
+            </StackPanel>
+            
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <!-- Сюда можно добавить Frame или ContentControl для страниц -->
+        </Grid>
     </Grid>
 </Window>

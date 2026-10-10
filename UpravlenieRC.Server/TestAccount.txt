@@ -1,0 +1,13 @@
+﻿Роль                        Логин                       Пароль
+Администратор               Admin					    admin123!
+Партнер						OnlyU						12345678
+Приемщик/отгрузчик			EgurnovaA					Aegurnova!
+Менеджер закупок			Manager						321123Aa
+Сотрудник склада			WorkerSklad					workforfood  
+Водитель					Driver						gasgasgas1     
+Логист                		Logitek						logist
+
+
+
+
+

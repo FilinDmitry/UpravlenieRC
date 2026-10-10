@@ -3,7 +3,7 @@
    "ContextClassName": "RC_SkladContext",
    "ContextNamespace": null,
    "FilterSchemas": false,
-   "IncludeConnectionString": false,
+   "IncludeConnectionString": true,
    "MinimumProductVersion": "2.6.1093",
    "ModelNamespace": null,
    "OutputContextPath": null,

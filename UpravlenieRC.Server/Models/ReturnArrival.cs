@@ -5,8 +5,10 @@ using System.Collections.Generic;
 
 namespace UpravlenieRC.Server.Models;
 
-public partial class ReturnArrival : Return
+public partial class ReturnArrival
 {
+    public int Id { get; set; }
+
     public int Idarrival { get; set; }
 
     public virtual Arrival IdarrivalNavigation { get; set; }
