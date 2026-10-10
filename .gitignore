@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /UpravlenieRC.Server/AuthOptions.cs
+/UpravlenieRC.Server/Services/AuthOptions.cs
