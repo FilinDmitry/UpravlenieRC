@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,16 +25,39 @@ namespace UpravlenieRC.Client
         {
             InitializeComponent();
         }
+        private bool _isDarkTheme = false;
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var appResources = Application.Current.Resources;
+            var mergedDicts = appResources.MergedDictionaries;
+            
+            ResourceDictionary FinDict = Application.LoadComponent(new Uri("/res/styles/FinTheme.xaml", UriKind.Relative)) as ResourceDictionary;
+            ResourceDictionary MyDict = Application.LoadComponent(new Uri("res/styles/MyTheme.xaml", UriKind.Relative)) as ResourceDictionary;
+            if (_isDarkTheme)
+            {
+                mergedDicts.Remove(MyDict);
+                mergedDicts.Add(FinDict);
+            }
+            else
+            {
+                
+                mergedDicts.Remove(FinDict);
+                mergedDicts.Add(MyDict);
+            }
+
+            _isDarkTheme = !_isDarkTheme;
+        }
 
         private void ListV_MouseEnter(object sender, MouseEventArgs e)
         {
             if (TgBtn.IsChecked == true)
             {
-                tt1.Visibility = Visibility.Collapsed;
+                //tt1.Visibility = Visibility.Collapsed;
             }
             else
             {
-                tt1.Visibility = Visibility.Visible;
+                //tt1.Visibility = Visibility.Visible;
             }
         }
 
@@ -49,6 +73,7 @@ namespace UpravlenieRC.Client
             switch (lvi.Name)
             {
                 case ("El1"):
+                    
               //      MainFrame.NavigationService.Navigate(new ProfilePage());
                     break;
                 case ("El2"):

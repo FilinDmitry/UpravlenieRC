@@ -4,7 +4,7 @@
     
 
     <Style TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
         <Setter Property="Margin" Value="10"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
@@ -12,17 +12,17 @@
     </Style>
 
     <Style TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
         <Setter Property="Margin" Value="20"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="Background" Value="{StaticResource SecondColorBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource SecondColorBrush}"></Setter>
 
     </Style>
     <Style TargetType="TextBox">
         <Setter Property="Height" Value="50"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Background" Value="{StaticResource SecondColorBrush}"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource SecondColorBrush}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
         <Setter Property="Margin" Value="15"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
@@ -33,33 +33,33 @@
     <Style TargetType="PasswordBox">
         <Setter Property="Height" Value="50"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Background" Value="{StaticResource SecondColorBrush}"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource SecondColorBrush}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
         <Setter Property="Margin" Value="15"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
     <Style TargetType="ListBox">
-        <Setter Property="Background" Value="{StaticResource MainColorBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource MainColorBrush}"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
     <Style TargetType="TabItem">
         <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="Background" Value="{StaticResource SecondColorBrush}"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource SecondColorBrush}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
         <Setter Property="MinWidth" Value="90"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Grid Name="tabGrid">
-                        <Border Name="border" Background="{StaticResource MainColorBrush}" BorderThickness="1,1,1,0" Margin="0,-1,0,0" Padding="6,0,6,0" BorderBrush="DarkGray">
+                        <Border Name="border" Background="{DynamicResource MainColorBrush}" BorderThickness="1,1,1,0" Margin="0,-1,0,0" Padding="6,0,6,0" BorderBrush="DarkGray">
                             <ContentPresenter x:Name="contentPresenter" ContentSource="Header" RecognizesAccessKey="True"/>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource SecondColorBrush}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource SecondColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -67,14 +67,14 @@
         </Setter>
     </Style>
     <Style TargetType="MenuItem">
-        <Setter Property="Background" Value="{StaticResource SecondColorBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource SecondColorBrush}"></Setter>
     </Style>
     <Style TargetType="ToolTip" x:Key="tt_Style">
         <Setter Property="Placement" Value="Right"></Setter>
         <Setter Property="Height" Value="55"></Setter>
         <Setter Property="Margin" Value="20, 0,0, 0"></Setter>
-        <Setter Property="Background" Value="{StaticResource SecondColorBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource SecondColorBrush}"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
     </Style>
 </ResourceDictionary>

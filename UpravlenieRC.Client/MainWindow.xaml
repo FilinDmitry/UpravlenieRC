@@ -8,7 +8,6 @@
         Title="Управление РЦ" Height="450" Width="800"
         Icon="/res/images/Logo.png">
     <Window.Resources>
-        <ImageBrush x:Key="TbBtn_MouseOver" ImageSource="/res/images/Logo.png"/>
 
         <Style x:Key="TbBtn_Style" TargetType="{x:Type ToggleButton}">
             <Setter Property="Template">
@@ -18,12 +17,7 @@
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource TbBtn_MouseOver}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TbBtn_MouseOver}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -37,40 +31,40 @@
         </Grid.ColumnDefinitions>
 
         <!-- Панель навигации -->
-        <Grid  x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="Gray">
+        <Grid  x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="{DynamicResource MainColorBrush}">
             <StackPanel x:Name="st_panel">
                 <ListView MouseEnter="ListV_MouseEnter" SelectionChanged="ListV_SelectionChanged"
                           x:Name="ListV" BorderBrush="Transparent" Background="Transparent"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <!-- Кнопка открытия меню -->
-                    <ListViewItem x:Name="Menu" HorizontalAlignment="Left" Margin="0,0,0,15">
-                        
-                        <StackPanel  Orientation="Horizontal" Width="230">
-                            <ToggleButton Height="50" Width="50" x:Name="TgBtn"
-              Checked="TgBtn_Checked" Unchecked="TgBtn_Unchecked"
-              Style="{StaticResource TbBtn_Style}">
-                                <Image Source="/res/images/menu.jpg"/>
+                    <ListViewItem Width="230" x:Name="Menu" HorizontalAlignment="Left" Height="65" Margin="0,0,0,15">
+                        <ToggleButton HorizontalContentAlignment="Left" Width="230" Height="65" x:Name="TgBtn"
+                            Checked="TgBtn_Checked" Unchecked="TgBtn_Unchecked" 
+                            Style="{DynamicResource TbBtn_Style}">
+                            <StackPanel Width="230" Orientation="Horizontal">
 
-                            </ToggleButton>
-                            <TextBlock Foreground="White" Background="Transparent" FontSize="20"
+                                <Image Source="/res/images/menu.jpg" Width="50" Height="50"/>
+
+
+                                <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                HorizontalAlignment="Left" VerticalAlignment="Center"
                Text="Профиль" Margin="13,0,0,0"/>
-                        </StackPanel>
+
+                            </StackPanel>
+                        </ToggleButton>
                     </ListViewItem>
 
                     <!-- Пункт "Профиль" (видимый всегда, но логически часть меню) -->
                     <ListViewItem x:Name="El1" HorizontalAlignment="Left" Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image Height="50" Width="50" Source="/res/images/menu.jpg"/>
-                            <TextBlock Foreground="White" Background="Transparent" FontSize="20"
+                            <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"
                                        Text="Профиль" Margin="13,0,0,0"/>
                         </StackPanel>
-                        <ListViewItem.ToolTip>
-                            <ToolTip x:Name="tt1" Content="Профиль"/>
-                        </ListViewItem.ToolTip>
+                        
                     </ListViewItem>
-
+    
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Template">
@@ -96,13 +90,13 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-                
+                <Button VerticalAlignment="Bottom" Click="Button_Click" Height="50"></Button>
             </StackPanel>
             
         </Grid>
 
         <Grid Grid.Column="1">
-            <!-- Сюда можно добавить Frame или ContentControl для страниц -->
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="pages/AuthorizationPage.xaml"></Frame>
         </Grid>
     </Grid>
 </Window>
