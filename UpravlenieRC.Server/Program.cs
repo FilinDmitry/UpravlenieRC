@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using UpravlenieRC.Server;
 using UpravlenieRC.Server.Models;
-
+using UpravlenieRC.Server.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var hasher = new PasswordHasher<User>();

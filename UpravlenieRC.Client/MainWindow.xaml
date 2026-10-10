@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UpravlenieRC.Client"
         mc:Ignorable="d"
         Title="Управление РЦ" Height="450" Width="800"
-        Icon="/res/images/Logo.png">
+        Icon="/res/icons/Logo.png">
     <Window.Resources>
 
         <Style x:Key="TbBtn_Style" TargetType="{x:Type ToggleButton}">
@@ -43,7 +43,7 @@
                             Style="{DynamicResource TbBtn_Style}">
                             <StackPanel Width="230" Orientation="Horizontal">
 
-                                <Image Source="/res/images/menu.jpg" Width="50" Height="50"/>
+                                <Image Source="/res/icons/Logo.png" Width="50" Height="50"/>
 
 
                                 <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
@@ -57,14 +57,14 @@
                     <!-- Пункт "Профиль" (видимый всегда, но логически часть меню) -->
                     <ListViewItem x:Name="El1" HorizontalAlignment="Left" Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal" Width="230">
-                            <Image Height="50" Width="50" Source="/res/images/menu.jpg"/>
+                            <Image Height="50" Width="50" Source="/res/icons/menu.jpg"/>
                             <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"
                                        Text="Профиль" Margin="13,0,0,0"/>
                         </StackPanel>
-                        
+
                     </ListViewItem>
-    
+
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Template">
@@ -92,7 +92,7 @@
                 </ListView>
                 <Button VerticalAlignment="Bottom" Click="Button_Click" Height="50"></Button>
             </StackPanel>
-            
+
         </Grid>
 
         <Grid Grid.Column="1">
