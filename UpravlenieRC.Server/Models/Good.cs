@@ -19,9 +19,11 @@ public partial class Good
 
     public double? Mintemperature { get; set; }
 
-    public double VolumeForOneUnit { get; set; }
+    public double VolumeInLitr { get; set; }
 
     public double WeightForOneUnit { get; set; }
+
+    public string Name { get; set; }
 
     public virtual TovarCategory IdCategoryNavigation { get; set; }
 

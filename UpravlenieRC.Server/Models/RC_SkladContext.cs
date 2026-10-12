@@ -35,6 +35,8 @@ public partial class RC_SkladContext : DbContext
 
     public virtual DbSet<Partner> Partners { get; set; }
 
+    public virtual DbSet<RegestrationRequest> RegestrationRequests { get; set; }
+
     public virtual DbSet<Return> Returns { get; set; }
 
     public virtual DbSet<ReturnArrival> ReturnArrivals { get; set; }
@@ -199,7 +201,10 @@ public partial class RC_SkladContext : DbContext
             entity.Property(e => e.Mintemperature)
                 .HasDefaultValue(-40.0)
                 .HasColumnName("mintemperature");
-            entity.Property(e => e.VolumeForOneUnit).HasColumnName("volumeForOneUnit");
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("name");
             entity.Property(e => e.WeightForOneUnit).HasColumnName("weightForOneUnit");
 
             entity.HasOne(d => d.IdCategoryNavigation).WithMany(p => p.Goods)
@@ -325,6 +330,34 @@ public partial class RC_SkladContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<RegestrationRequest>(entity =>
+        {
+            entity.ToTable("RegestrationRequest");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AdminId).HasColumnName("adminId");
+            entity.Property(e => e.ClosedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("closedAt");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("createdAt");
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasColumnName("description");
+            entity.Property(e => e.IsClosed).HasColumnName("isClosed");
+            entity.Property(e => e.IsCreated).HasColumnName("isCreated");
+            entity.Property(e => e.Login)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("login");
+            entity.Property(e => e.PasswordHash)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("passwordHash");
         });
 
         modelBuilder.Entity<Return>(entity =>
