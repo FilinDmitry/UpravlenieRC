@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ReCaptcha.Desktop.WPF" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="res\icons\Logo.png" />
     <Resource Include="res\icons\menu.jpg" />
   </ItemGroup>

@@ -31,7 +31,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Панель навигации -->
-        <Grid  x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="{DynamicResource MainColorBrush}">
+        <Grid  x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="{DynamicResource SecondColorBrush}">
             <StackPanel x:Name="st_panel">
                 <ListView MouseEnter="ListV_MouseEnter" SelectionChanged="ListV_SelectionChanged"
                           x:Name="ListV" BorderBrush="Transparent" Background="Transparent"
@@ -96,7 +96,7 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="pages/AuthorizationPage.xaml"></Frame>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="pages/AuthorizationPage.xaml" Background="{DynamicResource MainColorBrush}"></Frame>
         </Grid>
     </Grid>
 </Window>
