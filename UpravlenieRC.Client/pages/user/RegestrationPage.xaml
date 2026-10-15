@@ -11,8 +11,11 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="240"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="AUTO"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -20,14 +23,16 @@
             <ColumnDefinition Width="230"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Логин" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0, 25, 0, 0"></TextBlock>
-        <TextBox x:Name="TB_Login" Width="400" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBox>
-        <TextBlock Text="Пароль" Grid.Row="1" VerticalAlignment="Center" Margin="0, 0, 0, 0" HorizontalAlignment="Right"></TextBlock>
-        <PasswordBox x:Name="TB_password" Width="400" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></PasswordBox>
-        <TextBlock Text="Повторите пароль" Grid.Row="1" VerticalAlignment="Bottom" Margin="0, 0, 0, 25" HorizontalAlignment="Right"></TextBlock>
-        <PasswordBox x:Name="TB_passwordRepeat" Width="400" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left"></PasswordBox>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <StackPanel x:Name="SP_Captcha">
+        <TextBlock Text="Логин" Grid.Row="1"  HorizontalAlignment="Right" Margin="0, 0, 0, 0"></TextBlock>
+        <TextBox x:Name="TB_Login" Width="400" Height="30" FontSize="16" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBox>
+        <TextBlock Text="Пароль" Grid.Row="2"  Margin="0, 0, 0, 0" HorizontalAlignment="Right"></TextBlock>
+        <PasswordBox x:Name="TB_password" Height="30" FontSize="16" Width="400" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></PasswordBox>
+        <TextBlock Text="Повторите пароль" Grid.Row="3"  Margin="0, 0, 0, 0" HorizontalAlignment="Right"></TextBlock>
+        <PasswordBox x:Name="TB_passwordRepeat" Height="30" FontSize="16" Width="400" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left"></PasswordBox>
+        <TextBlock Text="ИНН организации" Grid.Row="4"  HorizontalAlignment="Right" Margin="0, 0, 0, 0"></TextBlock>
+        <TextBox x:Name="TB_INN" Width="400" Grid.Row="4" Height="30" FontSize="16" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBox>
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <StackPanel Height="100" x:Name="SP_Captcha">
                 <TextBlock HorizontalAlignment="Center" Text="Введите текст captcha"></TextBlock>
                 <StackPanel Orientation="Horizontal">
 

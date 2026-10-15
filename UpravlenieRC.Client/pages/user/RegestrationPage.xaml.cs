@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UpravlenieRC.Client.modules;
 
 namespace UpravlenieRC.Client.pages
 {
@@ -24,15 +26,22 @@ namespace UpravlenieRC.Client.pages
         public RegestrationPage()
         {
             InitializeComponent();
+            Captcha_displayer.Text = Captcha.CaptchaCreate();
         }
         
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Captcha_displayer.Text == TB_Captcha.Text)
+            
+            if (Captcha.CheckCaptcha(TB_Captcha.Text))
             {
-                bool result = await TryRegestrationAsync();
-
-
+                if (TB_password.Password == TB_passwordRepeat.Password)
+                {
+                    bool result = await RegestrationAsync();
+                }
+                else
+                {
+                    MessageBox.Show("Пароли не совпадют, проверьте ввод и повторите отправку формы", "Введены разные пароли", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -40,17 +49,39 @@ namespace UpravlenieRC.Client.pages
                 CaptchaChange();
             }
         }
-        public async Task<bool> TryRegestrationAsync()
+        public async Task<bool> RegestrationAsync()
         {
-            return false;
+            HttpStatusCode responseCode = await AuthAndRegestration.TryRegestrationAsync(TB_Login.Text, TB_password.Password, TB_INN.Text);
+            if (responseCode == System.Net.HttpStatusCode.Conflict)
+            {
+                if (Captcha.CanBeSpam())
+                {
+                    Captcha_displayer.Text = Captcha.CaptchaCreate();
+                    SP_Captcha.Visibility = Visibility.Visible;
+                    return false;
+                }
+            }
+            else if (responseCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show("Компания с таким ИНН не найдена");
+            }
+            else if (responseCode == System.Net.HttpStatusCode.Created)
+            {
+                MessageBox.Show("Запрос на создание успешно отправлен");
+            }
+            else
+            {
+                MessageBox.Show("Непредвиденная ошибка");
+            }
+                return true;
         }
         public void CaptchaChange() // TODO: Сделать нормальную капчу
 
         {
 
             String allowchar = " ";
-            allowchar = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
-            allowchar += "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z";
+            allowchar = "A,B,C,D,E,F,G,H,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+            allowchar += "a,b,c,d,e,f,g,h,i,j,k,m,n,o,p,q,r,s,t,u,v,w,y,z";
             allowchar += "1,2,3,4,5,6,7,8,9,0";
             char[] a = { ',' };
             String[] ar = allowchar.Split(a);
@@ -68,7 +99,7 @@ namespace UpravlenieRC.Client.pages
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.Navigate(new RegestrationPage());
+            NavigationService.Navigate(new AuthorizationPage());
         }
     }
 }

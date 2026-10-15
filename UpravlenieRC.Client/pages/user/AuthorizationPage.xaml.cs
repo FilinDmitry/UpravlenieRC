@@ -45,7 +45,7 @@ namespace UpravlenieRC.Client.pages
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Captcha_displayer.Text == TB_Captcha.Text)
+            if (Captcha.CheckCaptcha(TB_Captcha.Text))
             {
                  bool result = await AuthorizationAsync();
             }

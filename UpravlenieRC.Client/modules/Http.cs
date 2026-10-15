@@ -12,8 +12,10 @@ namespace UpravlenieRC.Client.modules
         public static HttpClient httpClient = new HttpClient();
         public static class Urls
         {
-            private static string BaseUrl = "http://localhost:5152/api/";
-            public static string AuthUrl = BaseUrl + "auth";
+            private const string BaseUrl = "http://localhost:5152/api/";
+            public const string AuthUrl = BaseUrl + "auth";
+            public const string RegUrl = BaseUrl + "reg";
+
         }
 
     }

@@ -10,6 +10,7 @@ namespace UpravlenieRC.Client.modules
     {
         private static int failedAttempts = 0;
         private const int maxFailedBeforeCaptcha = 3;
+        private static string? actualCaptcha = null;
         static public String CaptchaCreate() // TODO: Сделать нормальную капчу
 
         {
@@ -29,6 +30,7 @@ namespace UpravlenieRC.Client.modules
                 temp = ar[(r.Next(0, ar.Length))];
                 pwd += temp;
             }
+            actualCaptcha = pwd;
             return pwd;
         }
         public static bool CanBeSpam()
@@ -36,5 +38,23 @@ namespace UpravlenieRC.Client.modules
             failedAttempts++;
             return failedAttempts >= maxFailedBeforeCaptcha;
         }
+        public static bool CheckCaptcha(string text)
+        {
+            if (string.IsNullOrEmpty(actualCaptcha))
+            {
+                return true;
+            }
+            else
+            {
+               if (actualCaptcha == text)
+               {
+                    return true;
+               }
+               return false;
+               
+            }
+        }
+
+
     }
 }

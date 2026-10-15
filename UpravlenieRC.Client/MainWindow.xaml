@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UpravlenieRC.Client"
         mc:Ignorable="d"
-        Title="Управление РЦ" Height="450" Width="800"
+        Title="Управление РЦ" Height="500" Width="800"
         Icon="/res/icons/Logo.png">
     <Window.Resources>
 
@@ -31,19 +31,19 @@
         </Grid.ColumnDefinitions>
 
         <!-- Панель навигации -->
-        <Grid  x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="{DynamicResource SecondColorBrush}">
-            <StackPanel x:Name="st_panel">
+        <Grid Panel.ZIndex="1" x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="{DynamicResource SecondColorBrush}">
+            <StackPanel  x:Name="st_panel">
                 <ListView MouseEnter="ListV_MouseEnter" SelectionChanged="ListV_SelectionChanged"
                           x:Name="ListV" BorderBrush="Transparent" Background="Transparent"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <!-- Кнопка открытия меню -->
-                    <ListViewItem Width="230" x:Name="Menu" HorizontalAlignment="Left" Height="65" Margin="0,0,0,15">
+                    <ListViewItem Width="230" x:Name="Menu" HorizontalAlignment="Left" Height="65" Margin="0,0,0,0">
                         <ToggleButton HorizontalContentAlignment="Left" Width="230" Height="65" x:Name="TgBtn"
                             Checked="TgBtn_Checked" Unchecked="TgBtn_Unchecked" 
                             Style="{DynamicResource TbBtn_Style}">
                             <StackPanel Width="230" Orientation="Horizontal">
 
-                                <Image Source="/res/icons/Logo.png" Width="50" Height="50"/>
+                                <Image Source="/res/icons/menu.jpg" Width="50" Height="50"/>
 
 
                                 <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
@@ -55,16 +55,25 @@
                     </ListViewItem>
 
                     <!-- Пункт "Профиль" (видимый всегда, но логически часть меню) -->
-                    <ListViewItem x:Name="El1" HorizontalAlignment="Left" Margin="0,0,0,15">
+                    <ListViewItem x:Name="Profile" HorizontalAlignment="Left" Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal" Width="230">
-                            <Image Height="50" Width="50" Source="/res/icons/menu.jpg"/>
+                            <Image Height="50" Width="50" Source="/res/icons/profile.png"/>
                             <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"
                                        Text="Профиль" Margin="13,0,0,0"/>
                         </StackPanel>
 
                     </ListViewItem>
+                    <!--Смена стилей-->
+                    <ListViewItem x:Name="Settings" HorizontalAlignment="Left" Margin="0,0,0,15">
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image Height="50" Width="50" Source="/res/icons/settings.png"/>
+                            <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="Профиль" Margin="13,0,0,0"/>
+                        </StackPanel>
 
+                    </ListViewItem>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Template">
@@ -90,13 +99,12 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-                <Button VerticalAlignment="Bottom" Click="Button_Click" Height="50"></Button>
             </StackPanel>
 
         </Grid>
 
-        <Grid Grid.Column="1">
-            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="pages/AuthorizationPage.xaml" Background="{DynamicResource MainColorBrush}"></Frame>
+        <Grid x:Name="MainGrid" Margin="0, 0, 0, 0" Grid.Column="1" Panel.ZIndex="0">
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="pages/user/AuthorizationPage.xaml" Background="{DynamicResource MainColorBrush}"></Frame>
         </Grid>
     </Grid>
 </Window>
