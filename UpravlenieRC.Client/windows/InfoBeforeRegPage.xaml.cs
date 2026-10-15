@@ -10,24 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpravlenieRC.Client.pages
+namespace UpravlenieRC.Client.windows
 {
     /// <summary>
-    /// Логика взаимодействия для RegestrationPage.xaml
+    /// Логика взаимодействия для InfoBeforeRegPage.xaml
     /// </summary>
-    public partial class RegestrationPage : Page
+    public partial class InfoBeforeRegPage : Window
     {
-        private int failedAttempts = 0;
-        public RegestrationPage()
+        public InfoBeforeRegPage()
         {
-            InitializeComponent();
-        }
-        public RegestrationPage(int failedAttempts)
-        {
-            this.failedAttempts = failedAttempts;
             InitializeComponent();
         }
     }

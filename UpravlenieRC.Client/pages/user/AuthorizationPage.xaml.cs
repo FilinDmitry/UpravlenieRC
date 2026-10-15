@@ -5,6 +5,7 @@ using ReCaptcha.Desktop.WPF.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -18,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UpravlenieRC.Client.modules;
 namespace UpravlenieRC.Client.pages
 {
     /// <summary>
@@ -25,8 +27,8 @@ namespace UpravlenieRC.Client.pages
     /// </summary>
     public partial class AuthorizationPage : Page
     {
-        private int failedAttempts = 0;
-        static HttpClient httpClient = new HttpClient();
+        
+        
         public record AuthRequest(string Login, string Password);
         public AuthorizationPage()
         {
@@ -37,7 +39,7 @@ namespace UpravlenieRC.Client.pages
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.Navigate(new RegestrationPage(failedAttempts));
+            NavigationService.Navigate(new RegestrationPage());
         }
 
 
@@ -45,58 +47,33 @@ namespace UpravlenieRC.Client.pages
         {
             if (Captcha_displayer.Text == TB_Captcha.Text)
             {
-                 bool result = await TryAuthorizationAsync();
-                
-
+                 bool result = await AuthorizationAsync();
             }
             else
             {
                 MessageBox.Show("Введен некоректный текст капчи", "Ошибка проверки антиспама", MessageBoxButton.OK, MessageBoxImage.Error);
-                CaptchaChange();
+                Captcha_displayer.Text = Captcha.CaptchaCreate();
             }
         }
-        public async Task<bool> TryAuthorizationAsync()
+        public async Task<bool> AuthorizationAsync()
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5152/api/auth");
-            HttpResponseMessage response = await httpClient.PostAsJsonAsync("http://localhost:5152/api/auth", new AuthRequest(TB_Login.Text, TB_password.Password));
-            MessageBox.Show(response.StatusCode.ToString());
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            HttpStatusCode responseCode = await AuthAndRegestration.TryAuthorizationAsync(TB_Login.Text, TB_password.Password); 
+            if (responseCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                failedAttempts++;
-                if (failedAttempts >= 3)
+                if (Captcha.CanBeSpam())
                 {
-                    CaptchaChange();
+                    Captcha_displayer.Text = Captcha.CaptchaCreate();
                     SP_Captcha.Visibility = Visibility.Visible;
                     return false;
                 }
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            else if (responseCode == System.Net.HttpStatusCode.OK)
             {
-                
+                MessageBox.Show("Ок");
             }
             return true;
         }
-        public void CaptchaChange() // TODO: Сделать нормальную капчу
-
-        {
-
-            String allowchar = " ";
-            allowchar = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
-            allowchar += "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z";
-            allowchar += "1,2,3,4,5,6,7,8,9,0";
-            char[] a = { ',' };
-            String[] ar = allowchar.Split(a);
-            String pwd = "";
-            string temp = "";
-            Random r = new Random();
-
-            for (int i = 0; i < 6; i++)
-            {
-                temp = ar[(r.Next(0, ar.Length))];
-                pwd += temp;
-            }
-            Captcha_displayer.Text = pwd;
-        }
+        
 
     }
 

@@ -20,7 +20,6 @@
     <Folder Include="pages\skladWorker\" />
     <Folder Include="pages\arrivalOutbound\" />
     <Folder Include="pages\driver\" />
-    <Folder Include="windows\" />
   </ItemGroup>
 
   <ItemGroup>
