@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:UpravlenieRC.Client"
         mc:Ignorable="d"
         Title="Управление РЦ" Height="500" Width="800"
-        Icon="/res/icons/Logo.png">
+        Icon="/res/icons/Logo.png" Closing="Window_Closing"
+        >
     <Window.Resources>
 
         <Style x:Key="TbBtn_Style" TargetType="{x:Type ToggleButton}">

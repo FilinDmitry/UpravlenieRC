@@ -28,9 +28,34 @@ namespace UpravlenieRC.Client
                 case Theme.MyDarkTheme:
                     mergedDicts.Remove(MyDict);
                     mergedDicts.Add(FinDict);
+                    curentTheme = Theme.FinTheme;
                     break;
             }
             
+        }
+        public static void LoadTheme(Theme theme)
+        {
+            var appResources = Application.Current.Resources;
+            var mergedDicts = appResources.MergedDictionaries;
+
+            ResourceDictionary FinDict = Application.LoadComponent(new Uri("/res/styles/FinTheme.xaml", UriKind.Relative)) as ResourceDictionary;
+            ResourceDictionary MyDict = Application.LoadComponent(new Uri("res/styles/MyTheme.xaml", UriKind.Relative)) as ResourceDictionary;
+            switch (theme)
+            {
+                case Theme.MyDarkTheme:
+                    mergedDicts.Remove(FinDict);
+                    mergedDicts.Add(MyDict);
+                    curentTheme = Theme.MyDarkTheme;
+                    break;
+                case Theme.FinTheme:
+                    curentTheme = Theme.FinTheme;
+                    break;
+                    
+            }
+        }
+        public static Theme GetTheme()
+        {
+            return curentTheme;
         }
     }
     

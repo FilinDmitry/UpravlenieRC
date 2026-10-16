@@ -25,6 +25,7 @@ namespace UpravlenieRC.Client
     {
         public MainWindow()
         {
+            Cache.LoadCache();
             InitializeComponent();
         }
 
@@ -64,6 +65,8 @@ namespace UpravlenieRC.Client
                     }
                     break;
                 case ("Settings"):
+                    Cache.SaveCache();
+                    
                     MainFrame.NavigationService.Navigate(new SettingsPage());
                     break;
             }
@@ -86,6 +89,18 @@ namespace UpravlenieRC.Client
             NavPanel.Width = 65;
             TgBtn.IsChecked = false;
             MainGrid.Margin = new Thickness(0, 0, 0, 0);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены, что хотите закрыть приложение?", "Message", MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.No)
+                e.Cancel = true;
+            else
+            {
+                Cache.SaveCache();
+                Application.Current.Shutdown();
+                e.Cancel = false;
+            }
         }
     }
 }
