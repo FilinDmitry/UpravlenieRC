@@ -20,6 +20,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[arrivalOrder]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[cellBalance]",
          "ObjectType": 0
       },
@@ -32,7 +36,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[good_arrivalOrder]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[goods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[goodsNeeded]",
          "ObjectType": 0
       },
       {

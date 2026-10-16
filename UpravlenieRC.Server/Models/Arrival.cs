@@ -11,13 +11,7 @@ public partial class Arrival
 
     public int Idstatus { get; set; }
 
-    public int? Idpartner { get; set; }
-
-    public int Creator { get; set; }
-
     public int? DepartedFromid { get; set; }
-
-    public DateTime CreatedAt { get; set; }
 
     public DateTime? ArrivedAt { get; set; }
 
@@ -31,11 +25,13 @@ public partial class Arrival
 
     public string CarPlate { get; set; }
 
-    public virtual User CreatorNavigation { get; set; }
+    public int? IdBasedOnOrder { get; set; }
 
     public virtual DirectionPoint DepartedFrom { get; set; }
 
     public virtual User IdAcceptanceClerkNavigation { get; set; }
+
+    public virtual ArrivalOrder IdBasedOnOrderNavigation { get; set; }
 
     public virtual Driver IddriverNavigation { get; set; }
 

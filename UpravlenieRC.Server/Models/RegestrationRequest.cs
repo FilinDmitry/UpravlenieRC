@@ -24,4 +24,8 @@ public partial class RegestrationRequest
     public int? AdminId { get; set; }
 
     public bool? IsCreated { get; set; }
+
+    public int Partherid { get; set; }
+
+    public virtual Partner Parther { get; set; }
 }

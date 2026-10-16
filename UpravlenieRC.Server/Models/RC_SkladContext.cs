@@ -19,6 +19,8 @@ public partial class RC_SkladContext : DbContext
 
     public virtual DbSet<Arrival> Arrivals { get; set; }
 
+    public virtual DbSet<ArrivalOrder> ArrivalOrders { get; set; }
+
     public virtual DbSet<CellBalance> CellBalances { get; set; }
 
     public virtual DbSet<DirectionPoint> DirectionPoints { get; set; }
@@ -26,6 +28,10 @@ public partial class RC_SkladContext : DbContext
     public virtual DbSet<Driver> Drivers { get; set; }
 
     public virtual DbSet<Good> Goods { get; set; }
+
+    public virtual DbSet<GoodArrivalOrder> GoodArrivalOrders { get; set; }
+
+    public virtual DbSet<GoodsNeeded> GoodsNeededs { get; set; }
 
     public virtual DbSet<InternalMovement> InternalMovements { get; set; }
 
@@ -89,32 +95,24 @@ public partial class RC_SkladContext : DbContext
             entity.Property(e => e.CarPlate)
                 .HasMaxLength(18)
                 .HasColumnName("carPlate");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("createdAt");
-            entity.Property(e => e.Creator).HasColumnName("creator");
             entity.Property(e => e.DepartedFromid).HasColumnName("departedFromid");
             entity.Property(e => e.IdAcceptanceClerk).HasColumnName("idAcceptanceClerk");
+            entity.Property(e => e.IdBasedOnOrder).HasColumnName("idBasedOnOrder");
             entity.Property(e => e.Iddriver).HasColumnName("iddriver");
-            entity.Property(e => e.Idpartner).HasColumnName("idpartner");
             entity.Property(e => e.Idstatus).HasColumnName("idstatus");
-            entity.Property(e => e.Notes)
-                .HasMaxLength(255)
-                .HasColumnName("notes");
-
-            entity.HasOne(d => d.CreatorNavigation).WithMany(p => p.ArrivalCreatorNavigations)
-                .HasForeignKey(d => d.Creator)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__arrival__creator__02084FDA");
+            entity.Property(e => e.Notes).HasColumnName("notes");
 
             entity.HasOne(d => d.DepartedFrom).WithMany(p => p.Arrivals)
                 .HasForeignKey(d => d.DepartedFromid)
                 .HasConstraintName("FK__arrival__departe__7F2BE32F");
 
-            entity.HasOne(d => d.IdAcceptanceClerkNavigation).WithMany(p => p.ArrivalIdAcceptanceClerkNavigations)
+            entity.HasOne(d => d.IdAcceptanceClerkNavigation).WithMany(p => p.Arrivals)
                 .HasForeignKey(d => d.IdAcceptanceClerk)
                 .HasConstraintName("FK__arrival__idAccep__05D8E0BE");
+
+            entity.HasOne(d => d.IdBasedOnOrderNavigation).WithMany(p => p.Arrivals)
+                .HasForeignKey(d => d.IdBasedOnOrder)
+                .HasConstraintName("FK_arrival_arrivalOrder");
 
             entity.HasOne(d => d.IddriverNavigation).WithMany(p => p.Arrivals)
                 .HasForeignKey(d => d.Iddriver)
@@ -124,6 +122,23 @@ public partial class RC_SkladContext : DbContext
                 .HasForeignKey(d => d.Idstatus)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__arrival__idstatu__75A278F5");
+        });
+
+        modelBuilder.Entity<ArrivalOrder>(entity =>
+        {
+            entity.ToTable("arrivalOrder");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("createdAt");
+            entity.Property(e => e.Idpartner).HasColumnName("idpartner");
+
+            entity.HasOne(d => d.IdpartnerNavigation).WithMany(p => p.ArrivalOrders)
+                .HasForeignKey(d => d.Idpartner)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_arrivalOrder_partner");
         });
 
         modelBuilder.Entity<CellBalance>(entity =>
@@ -195,6 +210,7 @@ public partial class RC_SkladContext : DbContext
             entity.Property(e => e.IdCategory).HasColumnName("idCategory");
             entity.Property(e => e.Idmanufacturer).HasColumnName("idmanufacturer");
             entity.Property(e => e.Idunits).HasColumnName("idunits");
+            entity.Property(e => e.IsInStopList).HasColumnName("isInStopList");
             entity.Property(e => e.Maxtemperature)
                 .HasDefaultValue(50.0)
                 .HasColumnName("maxtemperature");
@@ -221,6 +237,42 @@ public partial class RC_SkladContext : DbContext
                 .HasForeignKey(d => d.Idunits)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__goods__idunits__778AC167");
+        });
+
+        modelBuilder.Entity<GoodArrivalOrder>(entity =>
+        {
+            entity.HasKey(e => new { e.GoodId, e.ArrivalOrderid });
+
+            entity.ToTable("good_arrivalOrder");
+
+            entity.Property(e => e.GoodId).HasColumnName("goodId");
+            entity.Property(e => e.ArrivalOrderid).HasColumnName("arrivalOrderid");
+
+            entity.HasOne(d => d.ArrivalOrder).WithMany(p => p.GoodArrivalOrders)
+                .HasForeignKey(d => d.ArrivalOrderid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_good_arrivalOrder_arrivalOrder");
+
+            entity.HasOne(d => d.Good).WithMany(p => p.GoodArrivalOrders)
+                .HasForeignKey(d => d.GoodId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_good_arrivalOrder_goods");
+        });
+
+        modelBuilder.Entity<GoodsNeeded>(entity =>
+        {
+            entity.HasKey(e => e.GoodId);
+
+            entity.ToTable("goodsNeeded");
+
+            entity.Property(e => e.GoodId)
+                .ValueGeneratedNever()
+                .HasColumnName("goodID");
+
+            entity.HasOne(d => d.Good).WithOne(p => p.GoodsNeeded)
+                .HasForeignKey<GoodsNeeded>(d => d.GoodId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_goodsNeeded_goods");
         });
 
         modelBuilder.Entity<InternalMovement>(entity =>
@@ -354,10 +406,16 @@ public partial class RC_SkladContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("login");
+            entity.Property(e => e.Partherid).HasColumnName("partherid");
             entity.Property(e => e.PasswordHash)
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("passwordHash");
+
+            entity.HasOne(d => d.Parther).WithMany(p => p.RegestrationRequests)
+                .HasForeignKey(d => d.Partherid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RegestrationRequest_partner");
         });
 
         modelBuilder.Entity<Return>(entity =>
@@ -459,9 +517,7 @@ public partial class RC_SkladContext : DbContext
                 .HasColumnName("batchNumber");
             entity.Property(e => e.ExpirationDate).HasColumnType("datetime");
             entity.Property(e => e.Idgood).HasColumnName("idgood");
-            entity.Property(e => e.Notes)
-                .HasMaxLength(255)
-                .HasColumnName("notes");
+            entity.Property(e => e.Notes).HasColumnName("notes");
 
             entity.HasOne(d => d.IdgoodNavigation).WithMany(p => p.Tovars)
                 .HasForeignKey(d => d.Idgood)

@@ -21,9 +21,7 @@ public partial class User
 
     public string Email { get; set; }
 
-    public virtual ICollection<Arrival> ArrivalCreatorNavigations { get; set; } = new List<Arrival>();
-
-    public virtual ICollection<Arrival> ArrivalIdAcceptanceClerkNavigations { get; set; } = new List<Arrival>();
+    public virtual ICollection<Arrival> Arrivals { get; set; } = new List<Arrival>();
 
     public virtual ICollection<Driver> Drivers { get; set; } = new List<Driver>();
 

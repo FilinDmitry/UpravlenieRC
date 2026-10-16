@@ -15,7 +15,11 @@ public partial class Partner
 
     public string Iin { get; set; }
 
+    public virtual ICollection<ArrivalOrder> ArrivalOrders { get; set; } = new List<ArrivalOrder>();
+
     public virtual ICollection<DirectionPoint> DirectionPoints { get; set; } = new List<DirectionPoint>();
+
+    public virtual ICollection<RegestrationRequest> RegestrationRequests { get; set; } = new List<RegestrationRequest>();
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

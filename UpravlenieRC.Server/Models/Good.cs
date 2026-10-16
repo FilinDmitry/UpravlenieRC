@@ -25,6 +25,12 @@ public partial class Good
 
     public string Name { get; set; }
 
+    public bool IsInStopList { get; set; }
+
+    public virtual ICollection<GoodArrivalOrder> GoodArrivalOrders { get; set; } = new List<GoodArrivalOrder>();
+
+    public virtual GoodsNeeded GoodsNeeded { get; set; }
+
     public virtual TovarCategory IdCategoryNavigation { get; set; }
 
     public virtual Manufacturer IdmanufacturerNavigation { get; set; }
