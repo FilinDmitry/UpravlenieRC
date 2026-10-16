@@ -9,6 +9,23 @@
       Title="ProfilePage">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="{Binding Login}"></TextBlock>
+            <TextBlock Text="{Binding Role}"></TextBlock>
+            <TextBlock Text="{Binding Email}"></TextBlock>
+            <TextBlock Text="{Binding Rhone}"></TextBlock>
+            <TextBlock Text="{Binding Partner}"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <Button Click="ChangePasswordClick" Content="Сменить пароль"></Button>
+        </StackPanel>
     </Grid>
 </Page>

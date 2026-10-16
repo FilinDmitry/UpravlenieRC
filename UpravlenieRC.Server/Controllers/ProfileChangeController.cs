@@ -1,0 +1,126 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using UpravlenieRC.Server.DTO;
+using UpravlenieRC.Server.Models;
+
+namespace UpravlenieRC.Server.Controllers
+{
+    [Route("api/userUpdateProfile/[controller]")]
+    [ApiController]
+    public class ProfileChangeController : ControllerBase
+    {
+        PasswordHasher<User> hasher = new PasswordHasher<User>();
+
+        [HttpPatch("password")]
+        public async Task<IActionResult> ChangePassword(ClaimsPrincipal sender, RC_SkladContext context, ChangePasswordRequest request)
+        {
+            int userId;
+            try
+            {
+                userId = int.Parse(sender.FindFirst("sub")?.Value);
+            }
+            catch (Exception)
+            {
+                return Unauthorized("Неверный токен");
+            }
+
+            User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            { return NotFound("Пользователь не найден"); }
+
+            if (string.IsNullOrEmpty(request.OldPassword) || string.IsNullOrEmpty(request.NewPassword))
+            {
+                return BadRequest("OldPassword и NewPassword обязательны");
+            }
+            var verifyResult = hasher.VerifyHashedPassword(user, user.Password, request.OldPassword);
+            if (verifyResult != PasswordVerificationResult.Success)
+            {
+                return Unauthorized("Текущий пароль неверен");
+            }
+
+            user.Password = hasher.HashPassword(user, request.NewPassword);
+
+            await context.SaveChangesAsync();
+            return Ok("Пароль успешно изменён");
+        }
+
+        [HttpPatch("email")]
+        public async Task<IActionResult> UpdateEmail(ClaimsPrincipal sender, RC_SkladContext context, ChangeEmailRequest request)
+        {
+            int userId;
+            try
+            {
+                userId = int.Parse(sender.FindFirst("sub")?.Value);
+            }
+            catch (Exception)
+            {
+                return Unauthorized("Неверный токен");
+            }
+
+            User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound("Пользователь не найден");
+            }
+
+
+
+            if (string.IsNullOrEmpty(request.NewEmail))
+            {
+                return BadRequest("почта не может быть пустой");
+            }    
+                if (request.NewEmail == user.Email)
+                {
+                    return BadRequest("Новая почта должна отличаться");
+                }
+            if (context.Users.FirstOrDefaultAsync(u => u.Email == request.NewEmail) != null)
+            {
+                return Conflict("Данный email уже зарегестрирован на другого пользователя");
+            }
+            user.Email = request.NewEmail;
+            await context.SaveChangesAsync();
+            return Ok("Контактные данные обновлены");
+        }
+
+        [HttpPatch("phone")]
+        public async Task<IActionResult> UpdatePhone(ClaimsPrincipal sender, RC_SkladContext context, ChangePhoneRequest request)
+        {
+            int userId;
+            try
+            {
+                userId = int.Parse(sender.FindFirst("sub")?.Value);
+            }
+            catch (Exception)
+            {
+                return Unauthorized("Неверный токен");
+            }
+
+            User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound("Пользователь не найден");
+            }
+
+
+
+            if (string.IsNullOrEmpty(request.NewPhone))
+            {
+                return BadRequest("телефон не может быть пустым");
+            }
+            if (request.NewPhone == user.Phone)
+                {
+                    return BadRequest("Новый телефон должен отличаться");
+                }
+            if (context.Users.FirstOrDefaultAsync(u => u.Phone == request.NewPhone) != null)
+            {
+                return Conflict("Данный телефон уже зарегестрирован на другого пользователя");
+            }
+            user.Phone = request.NewPhone;
+            await context.SaveChangesAsync();
+            return Ok("Контактные данные обновлены");
+        }
+    }
+}
