@@ -18,10 +18,17 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel>
+            
             <TextBlock Text="{Binding Login}"></TextBlock>
             <TextBlock Text="{Binding Role}"></TextBlock>
-            <TextBlock Text="{Binding Email}"></TextBlock>
-            <TextBlock Text="{Binding Rhone}"></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Stretch" Text="{Binding Email}"></TextBlock>
+                <Image MouseLeftButtonDown="ChangeEmailClick" Source="/res/icons/change.png" Stretch="Uniform" Width="40"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Phone}"></TextBlock>
+                <Image MouseLeftButtonDown="ChangePhoneClick" Source="/res/icons/change.png" Stretch="Uniform" Width="40"/>
+            </StackPanel>
             <TextBlock Text="{Binding Partner}"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Column="1">

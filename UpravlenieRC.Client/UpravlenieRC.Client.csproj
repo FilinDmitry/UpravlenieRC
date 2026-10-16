@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="res\icons\change.png" />
     <None Remove="res\icons\Logo.png" />
     <None Remove="res\icons\menu.jpg" />
     <None Remove="res\icons\profile.png" />
@@ -30,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="res\icons\change.png" />
     <Resource Include="res\icons\Logo.png" />
     <Resource Include="res\icons\menu.jpg" />
     <Resource Include="res\icons\profile.png" />

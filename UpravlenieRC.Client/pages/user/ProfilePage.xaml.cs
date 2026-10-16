@@ -27,7 +27,17 @@ namespace UpravlenieRC.Client.pages.user
 
         private void ChangePasswordClick(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(new ChangeUserProfilePage(ChangeProfileType.Password));
+        }
 
+        private void ChangeEmailClick(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.Navigate(new ChangeUserProfilePage(ChangeProfileType.Email));
+        }
+
+        private void ChangePhoneClick(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.Navigate(new ChangeUserProfilePage(ChangeProfileType.Phone));
         }
     }
 }

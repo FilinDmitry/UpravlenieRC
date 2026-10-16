@@ -73,7 +73,11 @@ namespace UpravlenieRC.Server.Controllers
             {
                 return NotFound("Пользователь не найден");
             }
-
+            var verifyResult = hasher.VerifyHashedPassword(user, user.Password, request.Password);
+            if (verifyResult != PasswordVerificationResult.Success)
+            {
+                return Unauthorized("Текущий пароль неверен");
+            }
 
 
             if (string.IsNullOrEmpty(request.NewEmail))
@@ -111,12 +115,17 @@ namespace UpravlenieRC.Server.Controllers
             {
                 return NotFound("Пользователь не найден");
             }
-
+            
 
 
             if (string.IsNullOrEmpty(request.NewPhone))
             {
                 return BadRequest("телефон не может быть пустым");
+            }
+            var verifyResult = hasher.VerifyHashedPassword(user, user.Password, request.Password);
+            if (verifyResult != PasswordVerificationResult.Success)
+            {
+                return Unauthorized("Текущий пароль неверен");
             }
             if (request.NewPhone == user.Phone)
                 {

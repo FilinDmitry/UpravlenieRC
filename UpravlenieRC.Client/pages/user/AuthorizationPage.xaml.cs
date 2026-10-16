@@ -69,7 +69,7 @@ namespace UpravlenieRC.Client.pages
             }
             else if (responseCode == System.Net.HttpStatusCode.OK)
             {
-                MessageBox.Show("Ок");
+                //MessageBox.Show("Ок");
             }
             return true;
         }
