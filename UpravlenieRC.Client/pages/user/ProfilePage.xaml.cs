@@ -24,5 +24,10 @@ namespace UpravlenieRC.Client.pages.user
         {
             InitializeComponent();
         }
+
+        private void ChangePasswordClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

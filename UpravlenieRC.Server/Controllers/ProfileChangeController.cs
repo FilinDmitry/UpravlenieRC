@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,26 +8,26 @@ using UpravlenieRC.Server.DTO;
 using UpravlenieRC.Server.Models;
 
 namespace UpravlenieRC.Server.Controllers
-{
-    [Route("api/userUpdateProfile/[controller]")]
+{   
+    [Route("api/userUpdateProfile/")]
     [ApiController]
+    [Authorize]
     public class ProfileChangeController : ControllerBase
     {
-        PasswordHasher<User> hasher = new PasswordHasher<User>();
-
+        private readonly PasswordHasher<User> hasher = new PasswordHasher<User>();
         [HttpPatch("password")]
-        public async Task<IActionResult> ChangePassword(ClaimsPrincipal sender, RC_SkladContext context, ChangePasswordRequest request)
+        public async Task<IActionResult> ChangePassword(RC_SkladContext context, ChangePasswordRequest request)
         {
             int userId;
+
             try
             {
-                userId = int.Parse(sender.FindFirst("sub")?.Value);
+                userId = int.Parse(User.FindFirst("sub")?.Value);
             }
             catch (Exception)
             {
                 return Unauthorized("Неверный токен");
             }
-
             User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
             { return NotFound("Пользователь не найден"); }
@@ -34,6 +35,13 @@ namespace UpravlenieRC.Server.Controllers
             if (string.IsNullOrEmpty(request.OldPassword) || string.IsNullOrEmpty(request.NewPassword))
             {
                 return BadRequest("OldPassword и NewPassword обязательны");
+            }
+
+
+            var CheckNew = hasher.VerifyHashedPassword(user, user.Password, request.OldPassword);
+            if (CheckNew == PasswordVerificationResult.Success)
+            {
+                return BadRequest("Новый пароль не может совпадать со старым");
             }
             var verifyResult = hasher.VerifyHashedPassword(user, user.Password, request.OldPassword);
             if (verifyResult != PasswordVerificationResult.Success)
@@ -48,12 +56,12 @@ namespace UpravlenieRC.Server.Controllers
         }
 
         [HttpPatch("email")]
-        public async Task<IActionResult> UpdateEmail(ClaimsPrincipal sender, RC_SkladContext context, ChangeEmailRequest request)
+        public async Task<IActionResult> UpdateEmail(RC_SkladContext context, ChangeEmailRequest request)
         {
             int userId;
             try
             {
-                userId = int.Parse(sender.FindFirst("sub")?.Value);
+                userId = int.Parse(User.FindFirst("sub")?.Value);
             }
             catch (Exception)
             {
@@ -76,7 +84,7 @@ namespace UpravlenieRC.Server.Controllers
                 {
                     return BadRequest("Новая почта должна отличаться");
                 }
-            if (context.Users.FirstOrDefaultAsync(u => u.Email == request.NewEmail) != null)
+            if (await context.Users.FirstOrDefaultAsync(u => u.Email == request.NewEmail) != null)
             {
                 return Conflict("Данный email уже зарегестрирован на другого пользователя");
             }
@@ -86,12 +94,12 @@ namespace UpravlenieRC.Server.Controllers
         }
 
         [HttpPatch("phone")]
-        public async Task<IActionResult> UpdatePhone(ClaimsPrincipal sender, RC_SkladContext context, ChangePhoneRequest request)
+        public async Task<IActionResult> UpdatePhone(RC_SkladContext context, ChangePhoneRequest request)
         {
             int userId;
             try
             {
-                userId = int.Parse(sender.FindFirst("sub")?.Value);
+                userId = int.Parse(User.FindFirst("sub")?.Value);
             }
             catch (Exception)
             {
@@ -114,7 +122,7 @@ namespace UpravlenieRC.Server.Controllers
                 {
                     return BadRequest("Новый телефон должен отличаться");
                 }
-            if (context.Users.FirstOrDefaultAsync(u => u.Phone == request.NewPhone) != null)
+            if (await context.Users.FirstOrDefaultAsync(u => u.Phone == request.NewPhone) != null)
             {
                 return Conflict("Данный телефон уже зарегестрирован на другого пользователя");
             }
