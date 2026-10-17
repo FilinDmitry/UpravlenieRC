@@ -25,7 +25,7 @@ builder.Services
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-
+builder.Services.AddScoped<AuthAndRegService>();
 
 var app = builder.Build();
 app.UseAuthentication();

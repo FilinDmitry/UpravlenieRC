@@ -14,26 +14,28 @@ namespace UpravlenieRC.Server.Controllers
     public class AuthController : ControllerBase
     {
         PasswordHasher<User> hasher = new PasswordHasher<User>();
-        [HttpPost]
-        public async Task<IActionResult> Auth(RC_SkladContext context, AuthRequest request)
+        private readonly AuthAndRegService _service;
+        public AuthController(AuthAndRegService service)
         {
-            User? find_user = await context.Users.FirstOrDefaultAsync(
-        i => i.Login == request.Login);
-
-            if (find_user == null || string.IsNullOrWhiteSpace(request.Password))
-                return Unauthorized("Введен неверный логин или пароль");
-
-            var result = hasher.VerifyHashedPassword(
-                find_user, find_user.Password, request.Password);
-
-            if (result == PasswordVerificationResult.Failed)
-                return Unauthorized("Введен неверный логин или пароль");
-
-            return Ok(new
+            _service = service;
+        }
+        [HttpPost]
+        public async Task<IActionResult> Auth(AuthRequest request)
+        {
+            AuthServiceController response = await _service.Auth(request);
+            switch ((int)response.Code)
             {
-                access_token = JWT.CreateToken(find_user),
-                token_type = "Bearer"
-            });
+                case 200:
+                    return Ok(new
+                    {
+                        access_token = response.token,
+                        token_type = "Bearer"
+                    });
+                case 401:
+                    return Unauthorized(response.message);
+                default:
+                    return Problem();
+            }
         }
 
         

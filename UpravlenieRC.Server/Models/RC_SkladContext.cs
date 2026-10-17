@@ -404,12 +404,12 @@ public partial class RC_SkladContext : DbContext
             entity.Property(e => e.IsCreated).HasColumnName("isCreated");
             entity.Property(e => e.Login)
                 .IsRequired()
-                .HasMaxLength(50)
+                .HasMaxLength(255)
                 .HasColumnName("login");
             entity.Property(e => e.Partherid).HasColumnName("partherid");
             entity.Property(e => e.PasswordHash)
                 .IsRequired()
-                .HasMaxLength(50)
+                .HasMaxLength(255)
                 .HasColumnName("passwordHash");
 
             entity.HasOne(d => d.Parther).WithMany(p => p.RegestrationRequests)
