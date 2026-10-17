@@ -20,7 +20,7 @@ namespace UpravlenieRC.Client.modules
         public record ChangePasswordRequest(string OldPassword, string NewPassword);
         public record ChangeEmailRequest(string Password, string NewEmail);
         public record ChangePhoneRequest(string Password, string NewPhone);
-        private record RegRequest(string Login, string Password, string INN);
+        private record RegRequest(string Login, string Password, string INN, string message);
         public static async Task<HttpStatusCode> TryAuthorizationAsync(string login, string password)
         {
             HttpResponseMessage response = await Http.httpClient.PostAsJsonAsync(Http.Urls.AuthUrl, new AuthRequest(login, password));
@@ -32,10 +32,10 @@ namespace UpravlenieRC.Client.modules
             
             return response.StatusCode;
         }
-        public static async Task<HttpStatusCode> TryRegestrationAsync(string login, string password, string INN)
+        public static async Task<HttpStatusCode> TryRegestrationAsync(string login, string password, string INN, string message)
         {
             
-            HttpResponseMessage response = await Http.httpClient.PostAsJsonAsync(Http.Urls.RegUrl, new RegRequest(login, password, INN));
+            HttpResponseMessage response = await Http.httpClient.PostAsJsonAsync(Http.Urls.RegUrl, new RegRequest(login, password, INN, message));
             MessageBox.Show(response.StatusCode.ToString());
             return response.StatusCode;
         }

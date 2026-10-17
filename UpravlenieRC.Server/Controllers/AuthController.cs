@@ -15,9 +15,9 @@ namespace UpravlenieRC.Server.Controllers
     {
         PasswordHasher<User> hasher = new PasswordHasher<User>();
         [HttpPost]
-        public IActionResult Auth(RC_SkladContext context, AuthRequest request)
+        public async Task<IActionResult> Auth(RC_SkladContext context, AuthRequest request)
         {
-            User? find_user = context.Users.FirstOrDefault(
+            User? find_user = await context.Users.FirstOrDefaultAsync(
         i => i.Login == request.Login);
 
             if (find_user == null || string.IsNullOrWhiteSpace(request.Password))

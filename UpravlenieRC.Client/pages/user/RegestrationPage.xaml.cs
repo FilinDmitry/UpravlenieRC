@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,12 +45,12 @@ namespace UpravlenieRC.Client.pages
             else
             {
                 MessageBox.Show("Введен некоректный текст капчи", "Ошибка проверки антиспама", MessageBoxButton.OK, MessageBoxImage.Error);
-                CaptchaChange();
+                Captcha.CaptchaCreate();
             }
         }
         public async Task<bool> RegestrationAsync()
         {
-            HttpStatusCode responseCode = await AuthAndRegestration.TryRegestrationAsync(TB_Login.Text, TB_password.Password, TB_INN.Text);
+            HttpStatusCode responseCode = await AuthAndRegestration.TryRegestrationAsync(TB_Login.Text, TB_password.Password, TB_INN.Text, TB_Message.Text);
             if (responseCode == System.Net.HttpStatusCode.Conflict)
             {
                 if (Captcha.CanBeSpam())
@@ -75,27 +74,7 @@ namespace UpravlenieRC.Client.pages
             }
                 return true;
         }
-        public void CaptchaChange() // TODO: Сделать нормальную капчу
 
-        {
-
-            String allowchar = " ";
-            allowchar = "A,B,C,D,E,F,G,H,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
-            allowchar += "a,b,c,d,e,f,g,h,i,j,k,m,n,o,p,q,r,s,t,u,v,w,y,z";
-            allowchar += "1,2,3,4,5,6,7,8,9,0";
-            char[] a = { ',' };
-            String[] ar = allowchar.Split(a);
-            String pwd = "";
-            string temp = "";
-            Random r = new Random();
-
-            for (int i = 0; i < 6; i++)
-            {
-                temp = ar[(r.Next(0, ar.Length))];
-                pwd += temp;
-            }
-            Captcha_displayer.Text = pwd;
-        }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
