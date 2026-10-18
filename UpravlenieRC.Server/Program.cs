@@ -26,6 +26,7 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddScoped<AuthAndRegService>();
+builder.Services.AddScoped<CellBalanceServices>();
 
 var app = builder.Build();
 app.UseAuthentication();

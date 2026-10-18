@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="pages\partner\" />
-    <Folder Include="pages\admin\" />
-    <Folder Include="pages\manager\" />
-    <Folder Include="pages\skladWorker\" />
     <Folder Include="pages\arrivalOutbound\" />
     <Folder Include="pages\driver\" />
   </ItemGroup>
