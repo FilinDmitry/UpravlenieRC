@@ -19,7 +19,6 @@ namespace UpravlenieRC.Server.Controllers
             _service = service;
         }
         [HttpGet]
-        [Route("Get")]
         public async Task<IActionResult> GetCellBalanse()
         {
             return Ok(await _service.GetCellBalanse());

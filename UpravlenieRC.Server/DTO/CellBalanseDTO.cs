@@ -3,6 +3,7 @@
 namespace UpravlenieRC.Server.DTO
 {
     public class CellBalanseDTO
+        //убрать лишнюю информацию
     {
         public TovarDTO tovarDTO { get; set; }
         public StorageCellDTO storageCellDTO { get; set; }
