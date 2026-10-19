@@ -25,6 +25,7 @@ namespace UpravlenieRC.Server.Services
             return await _context.GoodsNeededs
                 .Include(gn => gn.Good)
                 .Include(gn => gn.Good.IdmanufacturerNavigation)
+                .Include(gn => gn.Good.IdCategoryNavigation)
                 .Include(gn => gn.Good.IdunitsNavigation).Select(gn => new GoodsNeededInfo(gn)).ToListAsync();
         }
         public async Task<ResponseWithMessage> SetNeededGoods(int id, int amount, double? price)

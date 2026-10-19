@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -23,13 +24,13 @@ namespace UpravlenieRC.Client.modules
             public const string GoodsNeededUrl = BaseUrl + "Goods/needed";
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
         }
-        public static async Task<List<GoodsNeededInfo>?> GetGoodsNeeded()
+        public static async Task<ObservableCollection<GoodsNeededInfo>?> GetGoodsNeeded()
         {
 
             HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsNeededUrl);
             if (response.IsSuccessStatusCode)
             {
-                return (await response.Content.ReadFromJsonAsync<List<GoodsNeededInfo>>());
+                return (await response.Content.ReadFromJsonAsync<ObservableCollection<GoodsNeededInfo>>());
             }
 
             return null;

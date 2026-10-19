@@ -76,16 +76,41 @@
                     </TextBlock.Style>
                 </TextBlock>
             </Grid>
+            <Grid>
+                <Button Content="Сохранить" Height="50" Margin="0" Click="Button_Click"></Button>
+            </Grid>
         </StackPanel>
         <ListBox x:Name="LB_catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-
                         <Border BorderBrush="{StaticResource BorderColorBrush}" BorderThickness="1.5" CornerRadius="5" Padding="3">
-
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <TextBlock Text="{Binding Price, StringFormat={}{0} руб.}"></TextBlock>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Viewbox HorizontalAlignment="Left"  Width="30" Height="30">
+                                        <Button x:Name="Minus" Content="-" Click="Minus_Click" Margin="0" Height="50" Width="50"/>
+                                    </Viewbox>
+                                    <TextBlock Margin="10, 0, 10, 0" HorizontalAlignment="Center" Grid.Column="1" MouseLeftButtonDown="Change_MouseLeftButtonDown">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Amount"/>
+                                                <Binding Path="Units"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <Viewbox Grid.Column="2" HorizontalAlignment="Right" Width="30" Height="30">
+                                        <Button x:Name="Plus" Click="Plus_Click" Content="+" Margin="0" Height="50" Width="50"/>
+                                    </Viewbox>
+                                </Grid>
+                            </StackPanel>
                         </Border>
-
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

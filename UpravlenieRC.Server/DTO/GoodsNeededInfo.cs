@@ -8,14 +8,14 @@ namespace UpravlenieRC.Server.DTO
     
         int Id { get; set; }
         public string Name { get; set; }
-
+        public string Category { get; set; }
         public string Manufacturer { get; set; }
         public string Units { get; set; }
         public double Amount { get; set; }
         
         public bool IsInStopList { get; set; }
         public double price { get; set; }
-
+        
         public GoodsNeededInfo(GoodsNeeded good)
         {
             Id = good.GoodId;
@@ -23,6 +23,7 @@ namespace UpravlenieRC.Server.DTO
             Manufacturer = good.Good.IdmanufacturerNavigation.Name;
             Units = good.Good.IdunitsNavigation.Name;
             IsInStopList = good.Good.IsInStopList;
+            Category = good.Good.IdCategoryNavigation.Name;
             price = good.Price;
             Amount = good.Amount;
         }

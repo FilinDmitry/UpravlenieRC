@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UpravlenieRC.Client"
         mc:Ignorable="d"
-        Title="Управление РЦ" Height="500" Width="800"
+        Title="Управление РЦ" Height="500" Width="900"
         Icon="/res/icons/Logo.png" Closing="Window_Closing"
         >
     <Window.Resources>
