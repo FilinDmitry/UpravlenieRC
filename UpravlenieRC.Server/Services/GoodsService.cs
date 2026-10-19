@@ -64,8 +64,10 @@ namespace UpravlenieRC.Server.Services
             }
             await _context.SaveChangesAsync();
             return new ResponseWithMessage(HttpStatusCode.OK, "Количество успешно изменено");
-            
-
+        }
+        public async Task<List<string>> GetCategories()
+        {
+            return await _context.TovarCategories.Select(c => c.Name).ToListAsync();
         }
     }
 }

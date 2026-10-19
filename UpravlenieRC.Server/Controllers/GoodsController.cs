@@ -45,5 +45,11 @@ namespace UpravlenieRC.Server.Controllers
         {
             return Ok(await _service.SetNeededGoods(id, amounter.amount, amounter.price));
         }
+        [HttpGet]
+        [Route("Categories")]
+        public async Task<IActionResult> GetCategories()
+        {
+            return Ok(await _service.GetCategories());
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace UpravlenieRC.Client.modules
             public const string ChangeEmailUrl = BaseUrl + "userUpdateProfile/email";
             public const string GoodsNeededUrl = BaseUrl + "Goods/needed";
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
+            public const string GoodsCategoryUrl = BaseUrl + "Goods/Categories";
         }
         public static async Task<ObservableCollection<GoodsNeededInfo>?> GetGoodsNeeded()
         {
@@ -34,6 +35,17 @@ namespace UpravlenieRC.Client.modules
             }
 
             return null;
+        }
+        public static async Task<List<string>> GetCategories()
+        {
+
+            HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsCategoryUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                return (await response.Content.ReadFromJsonAsync<List<string>>());
+            }
+
+            return new();
         }
 
     }

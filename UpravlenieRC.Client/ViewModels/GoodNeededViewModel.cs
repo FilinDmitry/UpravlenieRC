@@ -22,13 +22,14 @@ namespace UpravlenieRC.Client.ViewModels
         private double _amount;
         private bool _isInStopList;
         private double _price;
-        private string _category;
+        private string? _category;
+        private double _amountToCell;
         public int Id
         {
             get => _id;
             set { _id = value; OnPropertyChanged(); }
         }
-        public string Category
+        public string? Category
         {
             get => _category;
             set { _category = value; OnPropertyChanged(); }
@@ -56,23 +57,31 @@ namespace UpravlenieRC.Client.ViewModels
             get => _amount;
             set
             {
-                if (_amount != value)
+                if (_amount != value || value >= 0)
                 {
                     _amount = value;
                     OnPropertyChanged();
-                    // Если нужно сразу помечать как изменённое — раскомментируй:
-                    // if (ChangeType == ChangeType.None) ChangeType = ChangeType.Updated;
                 }
             }
         }
-
+        public double AmountToSell
+        {
+            get => _amountToCell;
+            set
+            {
+                if (_amountToCell != value || value >= 0)
+                {
+                    _amountToCell = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public bool IsInStopList
         {
             get => _isInStopList;
             set { _isInStopList = value; OnPropertyChanged(); }
         }
 
-        // Переименовали price → Price (WPF чувствителен к регистру)
         public double Price
         {
             get => _price;
@@ -84,6 +93,10 @@ namespace UpravlenieRC.Client.ViewModels
         public static async Task<ObservableCollection<GoodsNeededInfo>?> GetGoodsNeeded()
         {
             return await Http.GetGoodsNeeded();
+        }
+        public static async Task<List<string>> GetCategories()
+        {
+            return await Http.GetCategories();
         }
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

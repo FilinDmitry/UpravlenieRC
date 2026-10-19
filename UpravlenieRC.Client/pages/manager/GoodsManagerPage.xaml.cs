@@ -32,8 +32,13 @@ namespace UpravlenieRC.Client.pages.manager
 
         private async Task InitializeData()
         {
-
-            _goods = await GoodsNeededInfo.GetGoodsNeeded();
+            Task<List<string>> categories = GoodsNeededInfo.GetCategories();
+            var goods = GoodsNeededInfo.GetGoodsNeeded();
+            List<String> categories_lst = await categories;
+            categories_lst.Insert(0, "Все категории");
+            CB_Categories.ItemsSource = categories_lst;
+            CB_Categories.SelectedIndex = 0;
+            _goods = await goods;
             LB_catalog.ItemsSource = _goods;
         }
 
@@ -76,23 +81,31 @@ namespace UpravlenieRC.Client.pages.manager
         }
         private void Filter()
         {
-            ObservableCollection<GoodsNeededInfo> list = _goods;
-            if (Genre.SelectedItem != null)
+            List<GoodsNeededInfo> list = _goods.ToList();
+            if (CB_Categories.SelectedValue != null)
             {
-                list = (ObservableCollection<GoodsNeededInfo>)list.Where(i => i.Category == Genre.SelectedItem);
+                if (CB_Categories.SelectedIndex != 0)
+                list = list.Where(i => i.Category == CB_Categories.SelectedItem.ToString()).ToList();
             }
 
             switch (Sort.SelectedIndex)
             {
                 case (0):
-                    list = (ObservableCollection<GoodsNeededInfo>)list.OrderByDescending(i => i.Name);
+                    list = list.OrderByDescending(i => i.Name).ToList();
                     break;
                 case (1):
-                    list = (ObservableCollection<GoodsNeededInfo>)list.OrderBy(i => i.Name);
+                    list = list.OrderBy(i => i.Name).ToList();
+                    break;
+                case (2):
+                    list = list.OrderByDescending(i => i.Price).ToList();
                     break;
             }
+            if (!string.IsNullOrEmpty(Search.Text))
+            {
+                list = list.Where(i => i.Name.Contains(Search.Text)).ToList();
+            }
             LB_catalog.ItemsSource = null;
-            LB_catalog.ItemsSource = list;
+            LB_catalog.ItemsSource = new ObservableCollection<GoodsNeededInfo>(list);
         }
 
         private void Change_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -38,7 +38,7 @@
 
             </Border>
             <Grid>
-                <ComboBox SelectionChanged="CB_SelectionChanged" x:Name="Genre" Style="{StaticResource Combo}" FontSize="14">
+                <ComboBox SelectionChanged="CB_SelectionChanged" x:Name="CB_Categories" Style="{StaticResource Combo}" FontSize="14">
 
                 </ComboBox>
                 <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Категория" Grid.Column="1">
@@ -61,6 +61,9 @@
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <TextBlock Text="По возрастанию"></TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Text="По стоимости"></TextBlock>
                     </ComboBoxItem>
                 </ComboBox>
                 <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Сортировка" Grid.Column="1">
