@@ -19,6 +19,8 @@ public partial class StorageCell
 
     public double Maxweight { get; set; }
 
+    public bool IsWorking { get; set; }
+
     public virtual ICollection<CellBalance> CellBalances { get; set; } = new List<CellBalance>();
 
     public virtual ICollection<InternalMovement> InternalMovementIdNewCellNavigations { get; set; } = new List<InternalMovement>();

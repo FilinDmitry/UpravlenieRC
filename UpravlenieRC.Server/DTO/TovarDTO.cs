@@ -6,7 +6,7 @@ namespace UpravlenieRC.Server.DTO
     {
         public int Id { get; set; }
         public string BatchNumber { get; set; }
-        public GoodsDTO good {  get; set; }
+        public string Name { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string Notes { get; set; }
 
@@ -16,7 +16,7 @@ namespace UpravlenieRC.Server.DTO
             BatchNumber = tovar.BatchNumber;
             ExpirationDate = tovar.ExpirationDate;
             Notes = tovar.Notes;
-            good = new GoodsDTO(tovar.IdgoodNavigation);
+            Name = tovar.IdgoodNavigation.Name;
         }
     }
 }

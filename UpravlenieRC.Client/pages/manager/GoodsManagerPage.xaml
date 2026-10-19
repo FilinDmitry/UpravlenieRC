@@ -41,7 +41,7 @@
                 <ComboBox SelectionChanged="CB_SelectionChanged" x:Name="Genre" Style="{StaticResource Combo}" FontSize="14">
 
                 </ComboBox>
-                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Жанр" Grid.Column="1">
+                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Категория" Grid.Column="1">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
@@ -57,10 +57,10 @@
             <Grid>
                 <ComboBox SelectionChanged="CB_SelectionChanged" Width="140" x:Name="Sort" Style="{StaticResource Combo}" FontSize="14">
                     <ComboBoxItem>
-                        <TextBlock Text="По рейтингу"></TextBlock>
+                        <TextBlock Text="По убыванию"></TextBlock>
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <TextBlock Text="По имени"></TextBlock>
+                        <TextBlock Text="По возрастанию"></TextBlock>
                     </ComboBoxItem>
                 </ComboBox>
                 <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Сортировка" Grid.Column="1">

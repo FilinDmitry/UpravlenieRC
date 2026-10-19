@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UpravlenieRC.Server.DTO;
 using UpravlenieRC.Server.Services;
 
 namespace UpravlenieRC.Server.Controllers
@@ -31,6 +32,18 @@ namespace UpravlenieRC.Server.Controllers
                 default:
                     return Problem();
             }*/
+        }
+        [HttpGet]
+        [Route("Needed")]
+        public async Task<IActionResult> GetNeededGoods()
+        {
+            return Ok(await _service.GetNeededGoods());
+        }
+        [HttpPost]
+        [Route("Needed/{id}")]
+        public async Task<IActionResult> SetNeededGoods(int id, ChangeNeededRequest amounter)
+        {
+            return Ok(await _service.SetNeededGoods(id, amounter.amount, amounter.price));
         }
     }
 }

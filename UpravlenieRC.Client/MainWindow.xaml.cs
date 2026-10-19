@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UpravlenieRC.Client.modules;
 using UpravlenieRC.Client.pages;
+using UpravlenieRC.Client.pages.admin;
+using UpravlenieRC.Client.pages.manager;
 using UpravlenieRC.Client.pages.user;
 namespace UpravlenieRC.Client
 {
@@ -69,7 +71,11 @@ namespace UpravlenieRC.Client
                     
                     MainFrame.NavigationService.Navigate(new SettingsPage());
                     break;
+                case ("Orders"):
+                    MainFrame.NavigationService.Navigate(new GoodsManagerPage());
+                    break;
             }
+            ListV.SelectedIndex = -1;
         }
 
         private void TgBtn_Checked(object sender, RoutedEventArgs e)

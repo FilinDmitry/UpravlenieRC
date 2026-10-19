@@ -17,6 +17,8 @@ public partial class TovarArrival
 
     public double Amount { get; set; }
 
+    public double? Price { get; set; }
+
     public virtual Arrival ArrivalNavigation { get; set; }
 
     public virtual Tovar TovarNavigation { get; set; }

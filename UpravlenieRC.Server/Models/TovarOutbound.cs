@@ -17,6 +17,8 @@ public partial class TovarOutbound
 
     public double Amount { get; set; }
 
+    public double? Price { get; set; }
+
     public virtual Outbound OutboundNavigation { get; set; }
 
     public virtual Tovar TovarNavigation { get; set; }

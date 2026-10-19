@@ -12,6 +12,7 @@
     <None Remove="res\icons\change.png" />
     <None Remove="res\icons\Logo.png" />
     <None Remove="res\icons\menu.jpg" />
+    <None Remove="res\icons\Order.png" />
     <None Remove="res\icons\profile.png" />
     <None Remove="res\icons\settings.png" />
     <None Remove="res\icons\ThemeChange.png" />
@@ -30,6 +31,7 @@
     <Resource Include="res\icons\change.png" />
     <Resource Include="res\icons\Logo.png" />
     <Resource Include="res\icons\menu.jpg" />
+    <Resource Include="res\icons\Order.png" />
     <Resource Include="res\icons\profile.png" />
     <Resource Include="res\icons\settings.png" />
     <Resource Include="res\icons\ThemeChange.png" />

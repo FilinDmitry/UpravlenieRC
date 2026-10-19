@@ -49,7 +49,7 @@
 
                                 <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                HorizontalAlignment="Left" VerticalAlignment="Center"
-               Text="Профиль" Margin="13,0,0,0"/>
+               Text="Меню" Margin="13,0,0,0"/>
 
                             </StackPanel>
                         </ToggleButton>
@@ -65,13 +65,22 @@
                         </StackPanel>
 
                     </ListViewItem>
-                    <!--Смена стилей-->
+                    <!--Настройки-->
                     <ListViewItem x:Name="Settings" HorizontalAlignment="Left" Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image Height="50" Width="50" Source="/res/icons/settings.png"/>
                             <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="Профиль" Margin="13,0,0,0"/>
+                   Text="Настройки" Margin="13,0,0,0"/>
+                        </StackPanel>
+
+                    </ListViewItem>
+                    <ListViewItem x:Name="Orders" HorizontalAlignment="Left" Margin="0,0,0,15">
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image Height="50" Width="50" Source="/res/icons/Order.png"/>
+                            <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="Заказы" Margin="13,0,0,0"/>
                         </StackPanel>
 
                     </ListViewItem>

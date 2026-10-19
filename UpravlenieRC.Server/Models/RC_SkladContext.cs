@@ -268,6 +268,7 @@ public partial class RC_SkladContext : DbContext
             entity.Property(e => e.GoodId)
                 .ValueGeneratedNever()
                 .HasColumnName("goodID");
+            entity.Property(e => e.Price).HasColumnName("price");
 
             entity.HasOne(d => d.Good).WithOne(p => p.GoodsNeeded)
                 .HasForeignKey<GoodsNeeded>(d => d.GoodId)
@@ -497,6 +498,9 @@ public partial class RC_SkladContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Column).HasColumnName("column");
+            entity.Property(e => e.IsWorking)
+                .HasDefaultValue(true)
+                .HasColumnName("isWorking");
             entity.Property(e => e.Maxvolume).HasColumnName("maxvolume");
             entity.Property(e => e.Maxweight).HasColumnName("maxweight");
             entity.Property(e => e.Row).HasColumnName("row");
@@ -535,6 +539,7 @@ public partial class RC_SkladContext : DbContext
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Arrival).HasColumnName("arrival");
             entity.Property(e => e.Isgood).HasColumnName("isgood");
+            entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.Tovar).HasColumnName("tovar");
 
             entity.HasOne(d => d.ArrivalNavigation).WithMany(p => p.TovarArrivals)
@@ -614,6 +619,7 @@ public partial class RC_SkladContext : DbContext
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Isgood).HasColumnName("isgood");
             entity.Property(e => e.Outbound).HasColumnName("outbound");
+            entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.Tovar).HasColumnName("tovar");
 
             entity.HasOne(d => d.OutboundNavigation).WithMany(p => p.TovarOutbounds)
@@ -674,6 +680,7 @@ public partial class RC_SkladContext : DbContext
                 .HasColumnName("email");
             entity.Property(e => e.Idpartner).HasColumnName("idpartner");
             entity.Property(e => e.Idtype).HasColumnName("idtype");
+            entity.Property(e => e.IsBanned).HasColumnName("isBanned");
             entity.Property(e => e.Login)
                 .IsRequired()
                 .HasMaxLength(255)

@@ -11,5 +11,7 @@ public partial class GoodsNeeded
 
     public int Amount { get; set; }
 
+    public double Price { get; set; }
+
     public virtual Good Good { get; set; }
 }
