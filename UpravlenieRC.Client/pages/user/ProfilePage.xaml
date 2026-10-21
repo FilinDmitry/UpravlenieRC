@@ -32,6 +32,7 @@
             <TextBlock Text="{Binding Partner}"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Column="1">
+            <Button Click="ExitClick" Content="Выйти"></Button>
             <Button Click="ChangePasswordClick" Content="Сменить пароль"></Button>
         </StackPanel>
     </Grid>

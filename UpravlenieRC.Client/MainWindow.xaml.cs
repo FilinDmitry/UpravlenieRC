@@ -17,6 +17,7 @@ using UpravlenieRC.Client.modules;
 using UpravlenieRC.Client.pages;
 using UpravlenieRC.Client.pages.admin;
 using UpravlenieRC.Client.pages.manager;
+using UpravlenieRC.Client.pages.skladWorker;
 using UpravlenieRC.Client.pages.user;
 namespace UpravlenieRC.Client
 {
@@ -73,6 +74,12 @@ namespace UpravlenieRC.Client
                     break;
                 case ("Orders"):
                     MainFrame.NavigationService.Navigate(new GoodsManagerPage());
+                    break;
+                case ("Statistic"):
+                    MainFrame.NavigationService.Navigate(new InventarizationPage());
+                    break;
+                case ("Administration"):
+                    MainFrame.NavigationService.Navigate(new GoodsAdminPage());
                     break;
             }
             ListV.SelectedIndex = -1;

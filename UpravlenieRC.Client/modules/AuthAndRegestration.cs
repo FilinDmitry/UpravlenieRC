@@ -17,9 +17,9 @@ namespace UpravlenieRC.Client.modules
 {
     static internal class AuthAndRegestration
     {
-        private static string? _role;
+        private static UserRoles _role = UserRoles.None;
 
-        public static string? Role => _role;
+        public static UserRoles Role => _role;
         public static bool isAuthorized => !string.IsNullOrEmpty(Http.JWTBearer);
         private record JWTToken(string access_token, string token_type);
         private record AuthRequest(string Login, string Password);
@@ -34,15 +34,47 @@ namespace UpravlenieRC.Client.modules
             {
                 SetToken((await response.Content.ReadFromJsonAsync<JWTToken>())?.access_token);
             }
-            MessageBox.Show(_role);
             return response.StatusCode;
+        }
+        public static void Quit()
+        {
+            Http.JWTBearer = null;
+            _role = UserRoles.None;
         }
         public static void SetToken(string? token)
         {
             Http.JWTBearer = token;
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
-            _role = jwtToken.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+            string? role = jwtToken.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+
+            switch (role)
+            {
+                case "Администратор":
+                    _role = UserRoles.Admin;
+                    break;
+                case "Партнер":
+                    _role = UserRoles.Partner;
+                    break;
+                case "Менеджер закупок":
+                    _role = UserRoles.Manager;
+                    break;
+                case "Приемщик/отгрузчик":
+                    _role = UserRoles.arrivalOutbound;
+                    break;
+                case "Сотрудник склада":
+                    _role = UserRoles.skladWorker;
+                    break;
+                case "Водитель":
+                    _role = UserRoles.Driver;
+                    break;
+                case "Логист":
+                    _role = UserRoles.Logist;
+                    break;
+                default:
+                    _role = UserRoles.None;
+                    break;
+            }
         }
         public static async Task<HttpStatusCode> TryRegestrationAsync(string login, string password, string INN, string message)
         {
@@ -78,5 +110,16 @@ namespace UpravlenieRC.Client.modules
             MessageBox.Show(response.StatusCode.ToString());
             return response.StatusCode;
         }
+    }
+    public enum UserRoles
+    {
+        None,
+        Admin,
+        Manager,
+        Partner,
+        skladWorker,
+        Driver,
+        Logist,
+        arrivalOutbound
     }
 }

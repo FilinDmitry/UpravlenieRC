@@ -20,6 +20,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UpravlenieRC.Client.modules;
+using UpravlenieRC.Client.pages.admin;
+using UpravlenieRC.Client.pages.manager;
+using UpravlenieRC.Client.pages.partner;
+using UpravlenieRC.Client.pages.skladWorker;
+using UpravlenieRC.Client.pages.user;
 namespace UpravlenieRC.Client.pages
 {
     /// <summary>
@@ -69,11 +74,33 @@ namespace UpravlenieRC.Client.pages
             }
             else if (responseCode == System.Net.HttpStatusCode.OK)
             {
-                //MessageBox.Show("Ок");
+                NavigationService.Navigate(GetStartPageForRole(AuthAndRegestration.Role));
             }
             return true;
         }
         
+        private Page GetStartPageForRole(UserRoles role)
+        {
+            switch (role)
+            {
+                case UserRoles.Admin:
+                    return new GoodsAdminPage();
+                case UserRoles.Partner:
+                    return new GoodsPartnerPage();
+                case UserRoles.Manager:
+                    return new GoodsManagerPage();
+                case UserRoles.skladWorker:
+                    return new InventarizationPage();
+                //case UserRoles.Driver:
+                //return new GoodsAdminPage();
+                //case UserRoles.Logist:
+                //    return new GoodsAdminPage();
+                //case UserRoles.arrivalOutbound:
+                //    return new GoodsAdminPage();
+                default:
+                    return new ProfilePage();
+            }
+        }
 
     }
 

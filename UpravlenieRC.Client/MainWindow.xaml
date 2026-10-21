@@ -84,6 +84,24 @@
                         </StackPanel>
 
                     </ListViewItem>
+                    <ListViewItem x:Name="Administration" HorizontalAlignment="Left" Margin="0,0,0,15">
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image Height="50" Width="50" Source="/res/icons/admin.jpg"/>
+                            <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Text="Заказы" Margin="13,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="Statistic" HorizontalAlignment="Left" Margin="0,0,0,15">
+                            <StackPanel Orientation="Horizontal" Width="230">
+                                <Image Height="50" Width="50" Source="/res/icons/otchet.png"/>
+                                <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Text="Заказы" Margin="13,0,0,0"/>
+                            </StackPanel>
+
+                        
+                    </ListViewItem>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Template">

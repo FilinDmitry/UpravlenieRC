@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UpravlenieRC.Client.modules;
 
 namespace UpravlenieRC.Client.pages.user
 {
@@ -38,6 +39,12 @@ namespace UpravlenieRC.Client.pages.user
         private void ChangePhoneClick(object sender, MouseButtonEventArgs e)
         {
             NavigationService.Navigate(new ChangeUserProfilePage(ChangeProfileType.Phone));
+        }
+
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            AuthAndRegestration.Quit();
+            NavigationService.Navigate(new AuthorizationPage());
         }
     }
 }
