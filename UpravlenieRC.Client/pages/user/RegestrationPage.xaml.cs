@@ -31,7 +31,7 @@ namespace UpravlenieRC.Client.pages
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             
-            if (Captcha.CheckCaptcha(TB_Captcha.Text))
+            if (Captcha.CheckCaptcha(TB_Captcha.Text, true))
             {
                 if (TB_password.Password == TB_passwordRepeat.Password)
                 {

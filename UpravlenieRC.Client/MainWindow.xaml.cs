@@ -17,6 +17,7 @@ using UpravlenieRC.Client.modules;
 using UpravlenieRC.Client.pages;
 using UpravlenieRC.Client.pages.admin;
 using UpravlenieRC.Client.pages.manager;
+using UpravlenieRC.Client.pages.partner;
 using UpravlenieRC.Client.pages.skladWorker;
 using UpravlenieRC.Client.pages.user;
 namespace UpravlenieRC.Client
@@ -29,23 +30,26 @@ namespace UpravlenieRC.Client
         public MainWindow()
         {
             Cache.LoadCache();
+            AuthAndRegestration.SetWindow(this);
             InitializeComponent();
+            ChangeMenuItemsVisibility(AuthAndRegestration.Role);
         }
 
         
 
-        private void ListV_MouseEnter(object sender, MouseEventArgs e)
+        
+
+        private void ChangeTooltipVisibility(Visibility mode)
         {
-            if (TgBtn.IsChecked == true)
+            foreach (ListViewItem item in ListV.Items)
             {
-                //tt1.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                //tt1.Visibility = Visibility.Visible;
+                ToolTip? tt = item.ToolTip as ToolTip;
+                if (tt != null)
+                {
+                    tt.Visibility = mode;
+                }
             }
         }
-
         private void ListV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
@@ -73,10 +77,10 @@ namespace UpravlenieRC.Client
                     MainFrame.NavigationService.Navigate(new SettingsPage());
                     break;
                 case ("Orders"):
-                    MainFrame.NavigationService.Navigate(new GoodsManagerPage());
+                    MainFrame.NavigationService.Navigate(OrdersClick(AuthAndRegestration.Role));
                     break;
                 case ("Statistic"):
-                    MainFrame.NavigationService.Navigate(new InventarizationPage());
+                    MainFrame.NavigationService.Navigate(StatisticClick(AuthAndRegestration.Role));
                     break;
                 case ("Administration"):
                     MainFrame.NavigationService.Navigate(new GoodsAdminPage());
@@ -84,10 +88,35 @@ namespace UpravlenieRC.Client
             }
             ListV.SelectedIndex = -1;
         }
-
+        private Page OrdersClick(UserRoles role)
+        {
+            switch (role)
+            {
+                case UserRoles.Admin:
+                    return new GoodsManagerPage();
+                case UserRoles.Manager:
+                    return new GoodsManagerPage();
+                case UserRoles.Partner:
+                    return new GoodsPartnerPage();
+                default:
+                    return new ProfilePage();
+            }
+        }
+        private Page StatisticClick(UserRoles role)
+        {
+            switch (role)
+            {
+                case UserRoles.Admin:
+                    return new InventarizationPage();
+                case UserRoles.skladWorker:
+                    return new InventarizationPage();
+                default:
+                    return new ProfilePage();
+            }
+        }
         private void TgBtn_Checked(object sender, RoutedEventArgs e)
         {
-            // Раскрываем меню
+            ChangeTooltipVisibility(Visibility.Hidden);
             menu_column.Width = new GridLength(230);
             NavPanel.Width = 230;
             
@@ -97,7 +126,7 @@ namespace UpravlenieRC.Client
 
         private void TgBtn_Unchecked(object sender, RoutedEventArgs e)
         {
-            // Скрываем меню
+            ChangeTooltipVisibility(Visibility.Hidden);
             menu_column.Width = new GridLength(65);
             NavPanel.Width = 65;
             TgBtn.IsChecked = false;
@@ -115,5 +144,84 @@ namespace UpravlenieRC.Client
                 e.Cancel = false;
             }
         }
+        public void ChangeMenuItemsVisibility(UserRoles role)
+        {
+            switch (role)
+            {
+                case UserRoles.Admin:
+                    AdminMenuVisinility();
+                    break;
+                case UserRoles.Partner:
+                    PartnerMenuVisinility();
+                    break;
+                case UserRoles.Manager:
+                    ManagerMenuVisinility();
+                    break;
+                case UserRoles.skladWorker:
+                    SkladWorkerMenuVisinility();
+                    break;
+                case UserRoles.Driver:
+                    DriverMenuVisinility(); 
+                    break;
+                case UserRoles.Logist:
+                    LogistMenuVisinility();
+                    break;
+                case UserRoles.arrivalOutbound:
+                    ArrivalOutboundMenuVisinility();
+                    break;
+                default:
+                    DefaultMenuVisinility();
+                    break;
+            }
+        }
+        private void AdminMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Visible;
+            Statistic.Visibility = Visibility.Visible;
+            Administration.Visibility = Visibility.Visible;
+        }
+        private void ArrivalOutboundMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Collapsed;
+            Statistic.Visibility = Visibility.Collapsed;
+            Administration.Visibility = Visibility.Collapsed;
+        }
+        private void DefaultMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Collapsed;
+            Statistic.Visibility = Visibility.Collapsed;
+            Administration.Visibility = Visibility.Collapsed;
+        }
+        private void PartnerMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Visible;
+            Statistic.Visibility = Visibility.Collapsed;
+            Administration.Visibility = Visibility.Collapsed;
+        }
+        private void ManagerMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Visible;
+            Statistic.Visibility = Visibility.Collapsed;
+            Administration.Visibility = Visibility.Collapsed;
+        }
+        private void SkladWorkerMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Collapsed;
+            Statistic.Visibility = Visibility.Visible;
+            Administration.Visibility = Visibility.Collapsed;
+        }
+        private void DriverMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Collapsed;
+            Statistic.Visibility = Visibility.Collapsed;
+            Administration.Visibility = Visibility.Collapsed;
+        }
+        private void LogistMenuVisinility()
+        {
+            Orders.Visibility = Visibility.Collapsed;
+            Statistic.Visibility = Visibility.Collapsed;
+            Administration.Visibility = Visibility.Collapsed;
+        }
+
     }
 }

@@ -39,6 +39,11 @@ namespace UpravlenieRC.Client.pages
         {
             
             InitializeComponent();
+            if (Captcha.CaptchaRequered())
+            {
+                SP_Captcha.Visibility = Visibility.Visible;
+                Captcha_displayer.Text = Captcha.CaptchaCreate();
+            }
             
         }
 
@@ -74,6 +79,7 @@ namespace UpravlenieRC.Client.pages
             }
             else if (responseCode == System.Net.HttpStatusCode.OK)
             {
+                
                 NavigationService.Navigate(GetStartPageForRole(AuthAndRegestration.Role));
             }
             return true;

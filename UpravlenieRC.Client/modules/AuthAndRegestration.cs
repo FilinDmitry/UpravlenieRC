@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -17,9 +18,14 @@ namespace UpravlenieRC.Client.modules
 {
     static internal class AuthAndRegestration
     {
-        private static UserRoles _role = UserRoles.None;
+        private static UserRoles _role  = UserRoles.None;
 
-        public static UserRoles Role => _role;
+        public static UserRoles Role
+        {
+            get => _role;
+            set { _role = value; OnRoleChanged(); }
+        }
+        private static MainWindow? MainWindow { get; set; } // для изменеия панели навигации
         public static bool isAuthorized => !string.IsNullOrEmpty(Http.JWTBearer);
         private record JWTToken(string access_token, string token_type);
         private record AuthRequest(string Login, string Password);
@@ -36,10 +42,22 @@ namespace UpravlenieRC.Client.modules
             }
             return response.StatusCode;
         }
+        public static void SetWindow(MainWindow mw)
+        {
+            MainWindow = mw;
+        }
+        private static void OnRoleChanged()
+        {
+            
+            if (MainWindow != null)
+            {
+                MainWindow.ChangeMenuItemsVisibility(Role);
+            }
+        }
         public static void Quit()
         {
             Http.JWTBearer = null;
-            _role = UserRoles.None;
+            Role = UserRoles.None;
         }
         public static void SetToken(string? token)
         {
@@ -51,28 +69,28 @@ namespace UpravlenieRC.Client.modules
             switch (role)
             {
                 case "Администратор":
-                    _role = UserRoles.Admin;
+                    Role = UserRoles.Admin;
                     break;
                 case "Партнер":
-                    _role = UserRoles.Partner;
+                    Role = UserRoles.Partner;
                     break;
                 case "Менеджер закупок":
-                    _role = UserRoles.Manager;
+                    Role = UserRoles.Manager;
                     break;
                 case "Приемщик/отгрузчик":
-                    _role = UserRoles.arrivalOutbound;
+                    Role = UserRoles.arrivalOutbound;
                     break;
                 case "Сотрудник склада":
-                    _role = UserRoles.skladWorker;
+                    Role = UserRoles.skladWorker;
                     break;
                 case "Водитель":
-                    _role = UserRoles.Driver;
+                    Role = UserRoles.Driver;
                     break;
                 case "Логист":
-                    _role = UserRoles.Logist;
+                    Role = UserRoles.Logist;
                     break;
                 default:
-                    _role = UserRoles.None;
+                    Role = UserRoles.None;
                     break;
             }
         }

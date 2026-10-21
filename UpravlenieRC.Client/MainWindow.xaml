@@ -34,9 +34,9 @@
         <!-- Панель навигации -->
         <Grid Panel.ZIndex="1" x:Name="NavPanel" Grid.Column="0" HorizontalAlignment="Left" Width="65" Background="{DynamicResource SecondColorBrush}">
             <StackPanel  x:Name="st_panel">
-                <ListView MouseEnter="ListV_MouseEnter" SelectionChanged="ListV_SelectionChanged"
+                <ListView  SelectionChanged="ListV_SelectionChanged"
                           x:Name="ListV" BorderBrush="Transparent" Background="Transparent"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <!-- Кнопка открытия меню -->
                     <ListViewItem Width="230" x:Name="Menu" HorizontalAlignment="Left" Height="65" Margin="0,0,0,0">
                         <ToggleButton HorizontalContentAlignment="Left" Width="230" Height="65" x:Name="TgBtn"
@@ -53,54 +53,68 @@
 
                             </StackPanel>
                         </ToggleButton>
+                        <ListViewItem.ToolTip>
+                            <ToolTip Content="Меню"></ToolTip>
+                        </ListViewItem.ToolTip>
                     </ListViewItem>
 
                     <!-- Пункт "Профиль" (видимый всегда, но логически часть меню) -->
-                    <ListViewItem x:Name="Profile" HorizontalAlignment="Left" Margin="0,0,0,15">
+                    <ListViewItem x:Name="Profile" HorizontalAlignment="Left" Margin="0">
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image Height="50" Width="50" Source="/res/icons/profile.png"/>
                             <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"
                                        Text="Профиль" Margin="13,0,0,0"/>
                         </StackPanel>
-
+                        <ListViewItem.ToolTip>
+                            <ToolTip Content="Профиль"></ToolTip>
+                        </ListViewItem.ToolTip>
                     </ListViewItem>
                     <!--Настройки-->
-                    <ListViewItem x:Name="Settings" HorizontalAlignment="Left" Margin="0,0,0,15">
+                    <ListViewItem x:Name="Settings" HorizontalAlignment="Left" Margin="0">
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image Height="50" Width="50" Source="/res/icons/settings.png"/>
                             <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="Настройки" Margin="13,0,0,0"/>
                         </StackPanel>
-
+                        <ListViewItem.ToolTip>
+                            <ToolTip Content="Настройки"></ToolTip>
+                        </ListViewItem.ToolTip>
                     </ListViewItem>
-                    <ListViewItem x:Name="Orders" HorizontalAlignment="Left" Margin="0,0,0,15">
+                    <ListViewItem x:Name="Orders" HorizontalAlignment="Left" Margin="0">
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image Height="50" Width="50" Source="/res/icons/Order.png"/>
                             <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="Заказы" Margin="13,0,0,0"/>
                         </StackPanel>
-
+                        <ListViewItem.ToolTip>
+                            <ToolTip Content="Заказы"></ToolTip>
+                        </ListViewItem.ToolTip>
                     </ListViewItem>
-                    <ListViewItem x:Name="Administration" HorizontalAlignment="Left" Margin="0,0,0,15">
+                    <ListViewItem x:Name="Administration" HorizontalAlignment="Left" Margin="0">
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image Height="50" Width="50" Source="/res/icons/admin.jpg"/>
                             <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Text="Заказы" Margin="13,0,0,0"/>
+                                Text="Админ панель" Margin="13,0,0,0"/>
                         </StackPanel>
+                        <ListViewItem.ToolTip>
+                            <ToolTip Content="Администрирование"></ToolTip>
+                        </ListViewItem.ToolTip>
                     </ListViewItem>
-                    <ListViewItem x:Name="Statistic" HorizontalAlignment="Left" Margin="0,0,0,15">
+                    <ListViewItem x:Name="Statistic" HorizontalAlignment="Left" Margin="0">
                             <StackPanel Orientation="Horizontal" Width="230">
                                 <Image Height="50" Width="50" Source="/res/icons/otchet.png"/>
                                 <TextBlock Foreground="{DynamicResource TextColorBrush}" Background="Transparent" FontSize="20"
                                     HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    Text="Заказы" Margin="13,0,0,0"/>
+                                    Text="Отчеты" Margin="13,0,0,0"/>
                             </StackPanel>
+                        <ListViewItem.ToolTip>
+                            <ToolTip Content="Статистика и отчеты"></ToolTip>
+                        </ListViewItem.ToolTip>
 
-                        
                     </ListViewItem>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">

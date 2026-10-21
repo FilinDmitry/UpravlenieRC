@@ -38,8 +38,15 @@ namespace UpravlenieRC.Client.modules
             failedAttempts++;
             return failedAttempts >= maxFailedBeforeCaptcha;
         }
-        public static bool CheckCaptcha(string text)
+        public static bool CheckCaptcha(string text, bool forse = false)
         {
+            if (!forse)
+            {
+                if(failedAttempts < maxFailedBeforeCaptcha)
+                {
+                    return true;
+                }
+            }
             if (string.IsNullOrEmpty(actualCaptcha))
             {
                 return true;
@@ -54,6 +61,11 @@ namespace UpravlenieRC.Client.modules
                
             }
         }
+        public static bool CaptchaRequered()
+        {
+            return failedAttempts >= maxFailedBeforeCaptcha; 
+        }
+        
 
 
     }
