@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="8.7.2" />
     <PackageReference Include="ReCaptcha.Desktop.WPF" Version="2.1.0" />
   </ItemGroup>
 

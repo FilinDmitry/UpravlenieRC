@@ -22,6 +22,7 @@ namespace UpravlenieRC.Client.modules
             public const string ChangePhoneUrl = BaseUrl + "userUpdateProfile/phone";
             public const string ChangeEmailUrl = BaseUrl + "userUpdateProfile/email";
             public const string GoodsNeededUrl = BaseUrl + "Goods/needed";
+            public const string InventarizationExcelUrl = BaseUrl + "Inventarization";
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
             public const string GoodsCategoryUrl = BaseUrl + "Goods/Categories";
         }

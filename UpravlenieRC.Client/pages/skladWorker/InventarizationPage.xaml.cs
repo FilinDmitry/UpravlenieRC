@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UpravlenieRC.Client.modules;
 
 namespace UpravlenieRC.Client.pages.skladWorker
 {
@@ -24,6 +25,11 @@ namespace UpravlenieRC.Client.pages.skladWorker
         {
             InitializeComponent();
         }
-        // excel об остатках товара
+
+        private void Btn_Inventarization_Click(object sender, RoutedEventArgs e)
+        {
+            ExportToWordAndExcel.Inventarization();
+        }
+        
     }
 }

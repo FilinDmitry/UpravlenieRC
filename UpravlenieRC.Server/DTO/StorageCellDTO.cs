@@ -15,6 +15,7 @@ namespace UpravlenieRC.Server.DTO
         public double Maxvolume { get; set; }
 
         public double Maxweight { get; set; }
+        public string Name => $"R{Row.ToString()}-C{Column.ToString()}";
         public StorageCellDTO(StorageCell storageCell) 
         {
             Id = storageCell.Id;

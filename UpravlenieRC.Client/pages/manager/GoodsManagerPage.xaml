@@ -46,7 +46,7 @@
                         <Style TargetType="TextBlock">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedIndex, ElementName=Genre}" Value="-1">
+                                <DataTrigger Binding="{Binding SelectedIndex, ElementName=CB_Categories}" Value="-1">
                                     <Setter Property="Visibility" Value="Visible"></Setter>
                                 </DataTrigger>
                             </Style.Triggers>

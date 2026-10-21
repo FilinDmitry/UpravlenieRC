@@ -17,8 +17,8 @@
             <RowDefinition Height="150"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="1" Grid.ColumnSpan="2" Content="Отчет об остатках товара (инвентаризация)"></Button>
-        <StackPanel>
+        <Button x:Name="Btn_Inventarization" Grid.Row="1" Grid.ColumnSpan="2" Content="Отчет об остатках товара (инвентаризация)" Click="Btn_Inventarization_Click"></Button>
+        <!--<StackPanel>
             <Grid>
 
                 <TextBox MinWidth="350" x:Name="MinColumn" Grid.Column="1"></TextBox>
@@ -85,6 +85,6 @@
                     </TextBlock.Style>
                 </TextBlock>
             </Grid>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Page>

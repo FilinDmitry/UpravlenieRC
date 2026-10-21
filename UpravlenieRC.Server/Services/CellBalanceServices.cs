@@ -19,13 +19,6 @@ namespace UpravlenieRC.Server.Services
                 .Include(cb => cb.IdcellNavigation)
                 .Include(cb => cb.IdtovarNavigation)
                     .ThenInclude(t => t.IdgoodNavigation)
-                        .ThenInclude(g => g.IdCategoryNavigation)      
-                .Include(cb => cb.IdtovarNavigation)             
-                    .ThenInclude(t => t.IdgoodNavigation)
-                        .ThenInclude(g => g.IdmanufacturerNavigation)
-                .Include(cb => cb.IdtovarNavigation) 
-                    .ThenInclude(t => t.IdgoodNavigation)
-                        .ThenInclude(g => g.IdunitsNavigation)
                 .Select(cb => new CellBalanseDTO(cb))
                 .ToListAsync();
         }
