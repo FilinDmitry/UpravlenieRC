@@ -1,10 +1,13 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,7 +17,10 @@ namespace UpravlenieRC.Client.modules
 {
     static internal class AuthAndRegestration
     {
-        public static bool isAuthorized = false;
+        private static string? _role;
+
+        public static string? Role => _role;
+        public static bool isAuthorized => !string.IsNullOrEmpty(Http.JWTBearer);
         private record JWTToken(string access_token, string token_type);
         private record AuthRequest(string Login, string Password);
         public record ChangePasswordRequest(string OldPassword, string NewPassword);
@@ -26,11 +32,17 @@ namespace UpravlenieRC.Client.modules
             HttpResponseMessage response = await Http.httpClient.PostAsJsonAsync(Http.Urls.AuthUrl, new AuthRequest(login, password));
             if (response.IsSuccessStatusCode)
             {
-                isAuthorized = true;
-                Http.JWTBearer = (await response.Content.ReadFromJsonAsync<JWTToken>())?.access_token;
+                SetToken((await response.Content.ReadFromJsonAsync<JWTToken>())?.access_token);
             }
-            
+            MessageBox.Show(_role);
             return response.StatusCode;
+        }
+        public static void SetToken(string? token)
+        {
+            Http.JWTBearer = token;
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            _role = jwtToken.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
         }
         public static async Task<HttpStatusCode> TryRegestrationAsync(string login, string password, string INN, string message)
         {
