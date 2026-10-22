@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -49,9 +50,20 @@ namespace UpravlenieRC.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> CreateUser(RegRequest request)
+        public async Task<IActionResult> CreateUser(CreateUser request)
         {
-            return Ok(await _service.CreateUser());
+            ResponseWithMessage response = await _service.CreateUser(request);
+            switch ((int)response.Code)
+            {
+                case 400:
+                    return BadRequest(response.message);
+                case 409:
+                    return Conflict(response.message);
+                case 201:
+                    return Created();
+                default:
+                    return Problem();
+            }
         }
         [HttpGet]
         [Route("GetRoles")]

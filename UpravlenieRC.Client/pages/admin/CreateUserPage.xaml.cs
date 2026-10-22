@@ -30,9 +30,27 @@ namespace UpravlenieRC.Client.pages.admin
         {
             CB_Role.ItemsSource = await Http.AdminFunc.GetRoles();
         }
-        private void Create_Click(object sender, RoutedEventArgs e)
+        private async void Create_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CB_Role.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите роль");
+                return;
+            }
+            if (TB_password.Password != TB_passwordRepeat.Password)
+            {
+                MessageBox.Show("Пароли не совпдают");
+                return;
+            }
+            bool result = await Http.AdminFunc.CreateUser(TB_Login.Text, TB_password.Password, TB_email.Text, TB_Phone.Text, CB_Role.SelectedItem.ToString());
+            if (result)
+            {
+                MessageBox.Show("Пользователь успешно создан");
+            }
+            else
+            {
+                MessageBox.Show("Что-то пошло не так");
+            }
         }
     }
 }

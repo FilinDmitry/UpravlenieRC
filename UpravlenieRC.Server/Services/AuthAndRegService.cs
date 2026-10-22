@@ -108,9 +108,66 @@ namespace UpravlenieRC.Server.Services
                 return false;
             }
         }
-        public async Task<bool> CreateUser()
+        public async Task<ResponseWithMessage> CreateUser(CreateUser request)
         {
-            return false;
+            
+            if (request.Login.Length < minLoginLength || request.Password.Length < minPasswordLength)
+            {
+                return new ResponseWithMessage(HttpStatusCode.BadRequest, "Пароль или логин не соответсвуют минимальной длине");
+            }
+            if (string.IsNullOrEmpty(request.Role))
+            {
+                return new ResponseWithMessage(HttpStatusCode.BadRequest, "Роль пользователя не задана");
+            }
+            string? Email = request.Email;
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                Email = null;
+            }
+            string? Phone = request.Phone;
+            if (string.IsNullOrEmpty(request.Phone))
+            {
+                Phone = null;
+            }
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Login == request.Login);
+            RegestrationRequest? regestration = await _context.RegestrationRequests.FirstOrDefaultAsync(u => u.Login == request.Login);
+            if (user != null || regestration != null)
+            {
+                return new ResponseWithMessage(HttpStatusCode.Conflict, "Пользователь с таким логином уже существует");
+            }
+            if (Phone != null)
+            {
+                user = await _context.Users.FirstOrDefaultAsync(u => u.Phone == request.Phone);
+                if (user != null)
+                {
+                    return new ResponseWithMessage(HttpStatusCode.Conflict, "Телефон уже закреплен за другим пользователем");
+                }
+            }
+            if (Email != null)
+            {
+                user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+                if (user != null)
+                {
+                    return new ResponseWithMessage(HttpStatusCode.Conflict, "Почта уже закреплена за другим пользователем");
+                }
+            }
+            
+            UserType? Idtype = await _context.UserTypes.FirstOrDefaultAsync(i => i.Name == request.Role);
+            if (Idtype == null)
+            {
+                return new ResponseWithMessage(HttpStatusCode.BadRequest, "Данная роль не найдена");
+            }
+            User created_user = new User()
+            {
+                Login = request.Login,
+                Email = Email,
+                Phone = Phone,
+                Idtype = Idtype.Id
+            };
+            created_user.Password = hasher.HashPassword(created_user, request.Password);
+            _context.Users.Add(created_user);
+            await _context.SaveChangesAsync();
+            return new ResponseWithMessage(HttpStatusCode.Created, "Пользователь успешно создан");
         }
         public async Task<List<string>> GetRoles()
         {

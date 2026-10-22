@@ -49,6 +49,26 @@ namespace UpravlenieRC.Client.modules
                 return (await response.Content.ReadFromJsonAsync<List<string>>());
 
             }
+            public static async Task<bool> CreateUser(string Login, string Password, string? Email, string? Phone, string Role)
+            {
+                if (string.IsNullOrEmpty(Login) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Role))
+                {
+                    MessageBox.Show("Заполните поля логина, пароля и роли");
+                    return false;
+                }
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Urls.CreateUserUrl);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+                
+                request.Content = new StringContent(JsonSerializer.Serialize(new CreateUser(Login, Password, Role, Phone, Email)),Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                if (response.StatusCode != HttpStatusCode.Created)
+                {
+                    MessageBox.Show(await response.Content.ReadAsStringAsync());
+                    return false;
+                }
+                MessageBox.Show("Пользователь успешно создан");
+                return true;
+            }
         }
         public static class Urls
         {
@@ -66,6 +86,7 @@ namespace UpravlenieRC.Client.modules
 
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
             public const string GoodsCategoryUrl = BaseUrl + "Goods/Categories";
+            public const string CreateUserUrl = RegUrl + "/create";
         }
         public static async Task<ObservableCollection<GoodsNeededInfo>?> GetGoodsNeeded()
         {
@@ -89,6 +110,7 @@ namespace UpravlenieRC.Client.modules
 
             return new();
         }
+        record CreateUser(string Login, string Password, string Role, string? Phone = null, string? Email = null);
         
         
 
