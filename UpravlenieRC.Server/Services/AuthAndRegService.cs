@@ -11,7 +11,7 @@ namespace UpravlenieRC.Server.Services
     public class AuthAndRegService
     {
         private readonly PasswordHasher<User> hasher = new PasswordHasher<User>();
-        private readonly PasswordHasher<RegestrationRequest> regHasher = new PasswordHasher<RegestrationRequest>();
+        //private readonly PasswordHasher<RegestrationRequest> regHasher = new PasswordHasher<RegestrationRequest>();
         private readonly RC_SkladContext _context;
         private int minPasswordLength = 4;
         private int minLoginLength = 4;
@@ -43,15 +43,20 @@ namespace UpravlenieRC.Server.Services
             {
                 return new ResponseWithMessage(HttpStatusCode.NotFound, "Организация с указанным ИНН не обнаружена");
             }
+            User regestration_false = new User()
+            {
+                Login = request.Login,
+                Idpartner = partner.Id
+            };
+            regestration_false.Password = hasher.HashPassword(regestration_false, request.Password);
             RegestrationRequest regestration = new RegestrationRequest()
             {
-                Description = request.message,
-                Login = request.Login,
-                PasswordHash = request.Password,
-                Partherid = partner.Id
+                Login = regestration_false.Login,
+                Partherid = (int)regestration_false.Idpartner,
+                PasswordHash = regestration_false.Password,
+                Description = request.message
             };
-            regestration.PasswordHash = regHasher.HashPassword(regestration, request.Password);
-            _context.RegestrationRequests.Add(regestration);
+            await _context.RegestrationRequests.AddAsync(regestration);
             await _context.SaveChangesAsync();
             return new ResponseWithMessage(HttpStatusCode.Created, "");
         }
@@ -69,6 +74,58 @@ namespace UpravlenieRC.Server.Services
             if (result == PasswordVerificationResult.Failed)
             { return new AuthServiceController(HttpStatusCode.Unauthorized, "Введен неверный логин или пароль", null); }
             return new AuthServiceController(HttpStatusCode.OK, null, JWT.CreateToken(find_user));
+        }
+        public async Task<bool> AcceptReg(int adminID, int requestid)
+        {
+            try
+            {
+                RegestrationRequest? regestration = await _context.RegestrationRequests.FirstOrDefaultAsync(i => i.Id == requestid);
+                if (regestration == null)
+                {
+                    return false;
+                }
+                regestration.ClosedAt = DateTime.Now;
+                regestration.AdminId = adminID;
+                regestration.IsCreated = true;
+                regestration.IsClosed = true;
+                if ((await _context.Users.FirstOrDefaultAsync(u => u.Login == regestration.Login)) != null)
+                {
+                    return false;
+                }
+                User createdUser = new User()
+                {
+                    Idpartner = regestration.Partherid,
+                    Idtype = 2,
+                    Login = regestration.Login,
+                    Password = regestration.PasswordHash
+                };
+                
+                await _context.Users.AddAsync(createdUser);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> DenyReg(int adminID, int requestid)
+        {
+            RegestrationRequest? regestration = await _context.RegestrationRequests.FirstOrDefaultAsync(i => i.Id == requestid);
+            if (regestration == null)
+            {
+                return false;
+            }
+            regestration.ClosedAt = DateTime.Now;
+            regestration.AdminId = adminID;
+            regestration.IsCreated = false;
+            regestration.IsClosed = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<List<ExistingRegRequest>> GetReg()
+        {
+           return await _context.RegestrationRequests.Where(rr => !rr.IsClosed).Include(rr => rr.Parther).Select(i => new ExistingRegRequest(i.Id, i.Parther.Name, i.Login, i.Description, i.CreatedAt)).ToListAsync();
         }
         public async Task<ResponseWithMessage> ChangePassword(int userId, ChangePasswordRequest request)
         {

@@ -41,17 +41,59 @@ namespace UpravlenieRC.Server.Controllers
                     return Problem();
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> RegGet()
+        {
+            return Ok(await _service.GetReg());
+        }
+
         [HttpPost]
         [Route("{id}/accept")]
-        public IActionResult RegAssept(int id, RegRequest request)
+        public async Task<IActionResult> RegAssept(int id)
         {
-            return Ok();
+            int userId;
+
+            try
+            {
+                userId = int.Parse(User.FindFirst("sub")?.Value);
+            }
+            catch (Exception)
+            {
+                return Unauthorized("Неверный токен");
+            }
+            bool Res = await _service.AcceptReg(userId, id);
+            if (Res)
+            {
+                return Created();
+            }
+            else
+            {
+                return Problem();
+            }
         }
         [HttpPost]
         [Route("{id}/decline")]
-        public IActionResult RegDecline(int id, RegRequest request)
+        public async Task<IActionResult> RegDecline(int id)
         {
-            return Ok();
+            int userId;
+
+            try
+            {
+                userId = int.Parse(User.FindFirst("sub")?.Value);
+            }
+            catch (Exception)
+            {
+                return Unauthorized("Неверный токен");
+            }
+            bool Res = await _service.DenyReg(userId, id);
+            if (Res)
+            {
+                return Ok();
+            }
+            else
+            {
+                return Problem();
+            }
         }
     }
 }

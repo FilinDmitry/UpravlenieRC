@@ -675,7 +675,6 @@ public partial class RC_SkladContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Email)
-                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("email");
             entity.Property(e => e.Idpartner).HasColumnName("idpartner");

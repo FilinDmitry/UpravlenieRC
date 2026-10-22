@@ -83,7 +83,7 @@ namespace UpravlenieRC.Client
                     MainFrame.NavigationService.Navigate(StatisticClick(AuthAndRegestration.Role));
                     break;
                 case ("Administration"):
-                    MainFrame.NavigationService.Navigate(new GoodsAdminPage());
+                    MainFrame.NavigationService.Navigate(new AcceptOrDenyUserRegPage());
                     break;
             }
             ListV.SelectedIndex = -1;

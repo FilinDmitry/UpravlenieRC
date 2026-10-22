@@ -1,8 +1,4 @@
-﻿using ReCaptcha.Desktop.WPF.Client;
-using ReCaptcha.Desktop.WPF.Client.Interfaces;
-using ReCaptcha.Desktop.WPF.Configuration;
-using ReCaptcha.Desktop.WPF.UI;
-using System;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
