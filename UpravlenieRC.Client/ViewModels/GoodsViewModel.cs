@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UpravlenieRC.Client.ViewModels
 {
-    internal class GoodsViewModel
+    public class GoodsViewModel
     {
     }
 }

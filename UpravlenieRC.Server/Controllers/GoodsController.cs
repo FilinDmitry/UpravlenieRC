@@ -39,6 +39,7 @@ namespace UpravlenieRC.Server.Controllers
         {
             return Ok(await _service.GetNeededGoods());
         }
+        
         [HttpPost]
         [Route("Needed/{id}")]
         public async Task<IActionResult> SetNeededGoods(int id, ChangeNeededRequest amounter)

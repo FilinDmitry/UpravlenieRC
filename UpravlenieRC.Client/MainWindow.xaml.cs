@@ -27,6 +27,10 @@ namespace UpravlenieRC.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Type> criticalPages = new List<Type>()
+        {
+            typeof(CartPartnerPage)
+        };
         public MainWindow()
         {
             Cache.LoadCache();
@@ -57,6 +61,21 @@ namespace UpravlenieRC.Client
             ListViewItem? lvi = lv.SelectedItem as ListViewItem;
             if (lvi is null)
             { return; }
+            var page = MainFrame.NavigationService.Content;
+            foreach (Type critical in criticalPages)
+            {
+                if (page.GetType() == critical)
+                {
+                    var result = MessageBox.Show(
+                        "Вы уверены, что хотите покинуть страницу? Вы можете потерять данные. Продолжить?",
+                        "Подтверждение",
+                        MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                }
+            }
             switch (lvi.Name)
             {
                 case ("Menu"):

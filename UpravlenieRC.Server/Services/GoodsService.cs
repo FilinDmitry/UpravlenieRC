@@ -28,6 +28,7 @@ namespace UpravlenieRC.Server.Services
                 .Include(gn => gn.Good.IdCategoryNavigation)
                 .Include(gn => gn.Good.IdunitsNavigation).Select(gn => new GoodsNeededInfo(gn)).ToListAsync();
         }
+        
         public async Task<ResponseWithMessage> SetNeededGoods(int id, int amount, double? price)
         {
             GoodsNeeded? needed = await _context.GoodsNeededs.FirstOrDefaultAsync(i => i.GoodId == id);

@@ -29,7 +29,7 @@ builder.Services.AddScoped<InvantarizationService>();
 builder.Services.AddScoped<AuthAndRegService>();
 builder.Services.AddScoped<CellBalanceServices>();
 builder.Services.AddScoped<GoodsService>();
-
+builder.Services.AddScoped<ArrivalService>();
 
 var app = builder.Build();
 app.UseAuthentication();

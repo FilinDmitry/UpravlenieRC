@@ -8,94 +8,137 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GoodsPartnerPage">
     <Page.Resources>
-        <Style  BasedOn="{StaticResource DefaultTB}" TargetType="TextBlock"/>
+            <Style BasedOn="{StaticResource DefaultTB}" TargetType="TextBlock"/>
     </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="80"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
-            <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                <Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBox TextChanged="Search_TextChanged" MinWidth="350" x:Name="Search" Grid.Column="1"></TextBox>
+                        <TextBlock Margin="25, 0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="20" Foreground="{StaticResource TextColorBrush}" Text="Введите поисковый запрос" Grid.Column="1">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Search}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                    </Grid>
+
+                </Border>
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <TextBox TextChanged="Search_TextChanged" MinWidth="350" x:Name="Search" Grid.Column="1"></TextBox>
-                    <TextBlock Margin="25, 0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="20" Foreground="{StaticResource TextColorBrush}" Text="Введите поисковый запрос" Grid.Column="1">
+                    <ComboBox SelectionChanged="CB_SelectionChanged" x:Name="CB_Categories" Style="{StaticResource Combo}" FontSize="14">
+
+                    </ComboBox>
+                    <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Категория" Grid.Column="1">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Collapsed"></Setter>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=Search}" Value="">
+                                    <DataTrigger Binding="{Binding SelectedIndex, ElementName=CB_Categories}" Value="-1">
                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-
                 </Grid>
-
-            </Border>
-            <Grid>
-                <ComboBox SelectionChanged="CB_SelectionChanged" x:Name="Genre" Style="{StaticResource Combo}" FontSize="14">
-
-                </ComboBox>
-                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Категория" Grid.Column="1">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Collapsed"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedIndex, ElementName=Genre}" Value="-1">
-                                    <Setter Property="Visibility" Value="Visible"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-            <Grid>
-                <ComboBox SelectionChanged="CB_SelectionChanged" Width="140" x:Name="Sort" Style="{StaticResource Combo}" FontSize="14">
-                    <ComboBoxItem>
-                        <TextBlock Text="По убыванию"></TextBlock>
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        <TextBlock Text="По возрастанию"></TextBlock>
-                    </ComboBoxItem>
-                </ComboBox>
-                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Сортировка" Grid.Column="1">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Collapsed"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedIndex, ElementName=Sort}" Value="-1">
-                                    <Setter Property="Visibility" Value="Visible"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-        </StackPanel>
-        <ListBox x:Name="LB_catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-
-                        <Border BorderBrush="{StaticResource BorderColorBrush}" BorderThickness="1.5" CornerRadius="5" Padding="3">
-
-                        </Border>
-                        
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
-    </Grid>
+                <Grid>
+                    <ComboBox SelectionChanged="CB_SelectionChanged" Width="140" x:Name="Sort" Style="{StaticResource Combo}" FontSize="14">
+                        <ComboBoxItem>
+                            <TextBlock Text="По убыванию"></TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="По возрастанию"></TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="По стоимости"></TextBlock>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" FontSize="16" Foreground="{StaticResource TextColorBrush}" Text="Сортировка" Grid.Column="1">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedIndex, ElementName=Sort}" Value="-1">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <Grid>
+                    <Button Content="Корзина" FontSize="16" Padding="10" Height="50" Margin="0" Click="Button_Click"></Button>
+                </Grid>
+            </StackPanel>
+            <ListBox x:Name="LB_catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border BorderBrush="{StaticResource BorderColorBrush}" BorderThickness="1.5" CornerRadius="5" Padding="3">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                    <TextBlock Text="{Binding Price, StringFormat={}{0} руб.}"></TextBlock>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Viewbox HorizontalAlignment="Left"  Width="30" Height="30">
+                                            <Button x:Name="Minus" Content="-" Click="Minus_Click" Margin="0" Height="50" Width="50"/>
+                                        </Viewbox>
+                                        <TextBlock Margin="10, 0, 10, 0" HorizontalAlignment="Center" Grid.Column="1" MouseLeftButtonDown="Change_MouseLeftButtonDown">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="AmountToSell"/>
+                                                    <Binding Path="Units"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                        <Viewbox Grid.Column="2" HorizontalAlignment="Right" Width="30" Height="30">
+                                            <Button x:Name="Plus" Click="Plus_Click" Content="+" Margin="0" Height="50" Width="50"/>
+                                        </Viewbox>
+                                    <Button Grid.ColumnSpan="3" Margin="0" Click="Plus_Click" Content="Добавить в корзину" FontSize="16">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding AmountToSell}" Value="0">
+                                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Grid>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </Grid>
 </Page>
+
+

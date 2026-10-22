@@ -34,6 +34,7 @@ namespace UpravlenieRC.Client.modules
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 return response.StatusCode;
             }
+            
             public static async Task<HttpStatusCode> DenyRegAsync(int id)
             {
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Urls.DenyRegUrl(id));
@@ -87,6 +88,24 @@ namespace UpravlenieRC.Client.modules
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
             public const string GoodsCategoryUrl = BaseUrl + "Goods/Categories";
             public const string CreateUserUrl = RegUrl + "/create";
+            public const string CreateArrivalOrderUrl = BaseUrl + "Goods/ArrivalOrder";
+        }
+        public static async Task<HttpStatusCode> CreateArrivalOrder(List<GoodsNeededInfo> goodsNeededInfo)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Urls.CreateArrivalOrderUrl);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+            request.Content = new StringContent(JsonSerializer.Serialize(goodsNeededInfo), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await httpClient.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Заявление на поставку успешно создано");
+            }
+            else
+            {
+                MessageBox.Show(await response.Content.ReadAsStringAsync());
+                
+            }
+            return response.StatusCode;
         }
         public static async Task<ObservableCollection<GoodsNeededInfo>?> GetGoodsNeeded()
         {
