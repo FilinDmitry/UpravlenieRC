@@ -7,7 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AcceptOrDenyUserRegPage">
-
+    <Page.Resources>
+        <Style BasedOn="{StaticResource DefaultTB}" TargetType="TextBlock"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
@@ -37,6 +39,9 @@
                 </Grid>
 
             </Border>
+            <Button Content="Создать пользователя" FontSize="16" Click="Button_Click">
+                
+            </Button>
         </StackPanel>
         <ListBox x:Name="LB_catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListBox.ItemTemplate>
@@ -49,8 +54,8 @@
                                 <TextBlock Text="{Binding CreatedAt}"></TextBlock>
                                 <TextBlock Text="{Binding Description}"></TextBlock>
                                 <StackPanel>
-                                    <Button x:Name="Deny" Content="Отклонить" Click="Btn_Reg_click" Margin="3"></Button>
-                                    <Button x:Name="Accept" Content="Принять" Click="Btn_Reg_click" Margin="3"></Button>
+                                    <Button FontSize="14" x:Name="Deny" Content="Отклонить" Click="Btn_Reg_click" Margin="3"></Button>
+                                    <Button FontSize="14" x:Name="Accept" Content="Принять" Click="Btn_Reg_click" Margin="3"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </Border>

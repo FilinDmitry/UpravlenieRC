@@ -146,7 +146,7 @@
         </Grid>
 
         <Grid x:Name="MainGrid" Margin="0, 0, 0, 0" Grid.Column="1" Panel.ZIndex="0">
-            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="pages\skladWorker\InventarizationPage.xaml" Background="{DynamicResource MainColorBrush}"></Frame>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="\pages\user\AuthorizationPage.xaml" Background="{DynamicResource MainColorBrush}"></Frame>
         </Grid>
     </Grid>
 </Window>

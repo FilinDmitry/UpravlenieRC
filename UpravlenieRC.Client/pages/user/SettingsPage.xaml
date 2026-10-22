@@ -7,7 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingsPage">
-
+    <Page.Resources>
+        <Style  BasedOn="{StaticResource DefaultTB}" TargetType="TextBlock"/>
+    </Page.Resources>
     <Grid>
         <Button Content="Сменить тему" Click="ThemeChange_Click"></Button>
     </Grid>

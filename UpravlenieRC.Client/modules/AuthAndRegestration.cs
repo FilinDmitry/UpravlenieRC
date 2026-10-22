@@ -140,4 +140,5 @@ namespace UpravlenieRC.Client.modules
         Logist,
         arrivalOutbound
     }
+    
 }

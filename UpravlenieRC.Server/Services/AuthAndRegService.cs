@@ -11,7 +11,6 @@ namespace UpravlenieRC.Server.Services
     public class AuthAndRegService
     {
         private readonly PasswordHasher<User> hasher = new PasswordHasher<User>();
-        //private readonly PasswordHasher<RegestrationRequest> regHasher = new PasswordHasher<RegestrationRequest>();
         private readonly RC_SkladContext _context;
         private int minPasswordLength = 4;
         private int minLoginLength = 4;
@@ -108,6 +107,14 @@ namespace UpravlenieRC.Server.Services
             {
                 return false;
             }
+        }
+        public async Task<bool> CreateUser()
+        {
+            return false;
+        }
+        public async Task<List<string>> GetRoles()
+        {
+            return await _context.UserTypes.Where(r => r.Id != 2).Select(i => i.Name).ToListAsync();
         }
         public async Task<bool> DenyReg(int adminID, int requestid)
         {

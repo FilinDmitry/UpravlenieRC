@@ -48,6 +48,19 @@ namespace UpravlenieRC.Server.Controllers
         }
 
         [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> CreateUser(RegRequest request)
+        {
+            return Ok(await _service.CreateUser());
+        }
+        [HttpGet]
+        [Route("GetRoles")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetRolesToCreate()
+        {
+            return Ok(await _service.GetRoles());
+        }
+        [HttpPost]
         [Route("{id}/accept")]
         public async Task<IActionResult> RegAssept(int id)
         {
@@ -95,5 +108,6 @@ namespace UpravlenieRC.Server.Controllers
                 return Problem();
             }
         }
+
     }
 }

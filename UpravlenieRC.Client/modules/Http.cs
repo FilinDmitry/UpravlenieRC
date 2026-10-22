@@ -13,6 +13,7 @@ using System.Windows;
 using UpravlenieRC.Client.ViewModels;
 namespace UpravlenieRC.Client.modules
 {
+    
     static internal class Http
     {
         public static HttpClient httpClient = new HttpClient();
@@ -40,6 +41,14 @@ namespace UpravlenieRC.Client.modules
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 return response.StatusCode;
             }
+            public static async Task<List<string>> GetRoles()
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Urls.GetRolesUrl);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                return (await response.Content.ReadFromJsonAsync<List<string>>());
+
+            }
         }
         public static class Urls
         {
@@ -51,6 +60,7 @@ namespace UpravlenieRC.Client.modules
             public const string ChangeEmailUrl = BaseUrl + "userUpdateProfile/email";
             public const string GoodsNeededUrl = BaseUrl + "Goods/needed";
             public const string InventarizationExcelUrl = BaseUrl + "Inventarization";
+            public const string GetRolesUrl = RegUrl + "/GetRoles";
             public static string AcceptRegUrl(int id) => RegUrl + "/" + id + "/accept";
             public static string DenyRegUrl(int id) => RegUrl + "/" + id + "/decline";
 
@@ -80,6 +90,8 @@ namespace UpravlenieRC.Client.modules
             return new();
         }
         
+        
 
     }
+    
 }

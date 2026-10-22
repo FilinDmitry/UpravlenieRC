@@ -77,5 +77,10 @@ namespace UpravlenieRC.Client.pages.admin
             LB_catalog.ItemsSource = null;
             LB_catalog.ItemsSource = list;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new CreateUserPage());
+        }
     }
 }
