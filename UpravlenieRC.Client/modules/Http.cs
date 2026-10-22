@@ -88,7 +88,7 @@ namespace UpravlenieRC.Client.modules
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
             public const string GoodsCategoryUrl = BaseUrl + "Goods/Categories";
             public const string CreateUserUrl = RegUrl + "/create";
-            public const string CreateArrivalOrderUrl = BaseUrl + "Goods/ArrivalOrder";
+            public const string CreateArrivalOrderUrl = BaseUrl + "Arrival/Order";
         }
         public static async Task<HttpStatusCode> CreateArrivalOrder(List<GoodsNeededInfo> goodsNeededInfo)
         {

@@ -11,7 +11,7 @@ public partial class GoodArrivalOrder
 
     public int ArrivalOrderid { get; set; }
 
-    public int? Amount { get; set; }
+    public double Amount { get; set; }
 
     public virtual ArrivalOrder ArrivalOrder { get; set; }
 

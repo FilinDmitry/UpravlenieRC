@@ -6,7 +6,7 @@ namespace UpravlenieRC.Server.DTO
     public class GoodsNeededInfo
     {
     
-        int Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
         public string Manufacturer { get; set; }
@@ -14,8 +14,9 @@ namespace UpravlenieRC.Server.DTO
         public double Amount { get; set; }
         
         public bool IsInStopList { get; set; }
-        public double price { get; set; }
+        public double Price { get; set; }
         
+        public int AmountToSell { get; set; } = 0;
         public GoodsNeededInfo(GoodsNeeded good)
         {
             Id = good.GoodId;
@@ -24,8 +25,21 @@ namespace UpravlenieRC.Server.DTO
             Units = good.Good.IdunitsNavigation.Name;
             IsInStopList = good.Good.IsInStopList;
             Category = good.Good.IdCategoryNavigation.Name;
-            price = good.Price;
+            Price = good.Price;
             Amount = good.Amount;
         }
+    }
+    public class GoodsNeededDTOGet
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string Manufacturer { get; set; }
+        public string Units { get; set; }
+        public double Amount { get; set; }
+
+        public bool IsInStopList { get; set; }
+
+        public double AmountToSell { get; set; }
     }
 }
