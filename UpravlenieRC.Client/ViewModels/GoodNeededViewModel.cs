@@ -29,6 +29,7 @@ namespace UpravlenieRC.Client.ViewModels
             get => _id;
             set { _id = value; OnPropertyChanged(); }
         }
+
         public string? Category
         {
             get => _category;

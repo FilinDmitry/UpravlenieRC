@@ -33,14 +33,69 @@ namespace UpravlenieRC.Server.Controllers
                     return Problem();
             }*/
         }
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> ChangeGood(int id, GoodsDTO goods)
+        {
+            ResponseWithMessage response = await _service.ChangeGood(id, goods);
+            switch ((int)response.Code)
+            {
+                case 204:
+                    return NoContent();
+                case 404:
+                    return NotFound();
+                default:
+                    return Problem();
+            }
+        }
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> StopGood(int id)
+        {
+            ResponseWithMessage response = await _service.StopGood(id);
+            switch ((int)response.Code)
+            {
+                case 204:
+                    return NoContent();
+                case 404:
+                    return NotFound();
+                default:
+                    return Problem();
+            }
+        }
         [HttpGet]
         [Route("Needed")]
         public async Task<IActionResult> GetNeededGoods()
         {
             return Ok(await _service.GetNeededGoods());
         }
-        
-        [HttpPost]
+        [HttpPatch]
+        [Route("Needed")]
+        public async Task<IActionResult> SetNeededGoodList(Dictionary<int, ChangeNeededRequest> dict)
+        {
+            var notFoundIds = new List<int>();
+            var successCount = 0;
+
+            foreach (var item in dict)
+            {
+                var response = await _service.SetNeededGoods(item.Key, item.Value.amount, item.Value.price);
+                if (response.Code == System.Net.HttpStatusCode.NotFound)
+                {
+                    notFoundIds.Add(item.Key);
+                }
+                else
+                {
+                    successCount++;
+                }
+            }
+            if (notFoundIds.Count == 0)
+            {
+                return Ok("Данные обновлены в полном объёме");
+            }
+            return Ok($"Обновлено {successCount} позиций, не найдены: {string.Join(", ", notFoundIds)}");
+            
+        }
+        [HttpPatch]
         [Route("Needed/{id}")]
         public async Task<IActionResult> SetNeededGoods(int id, ChangeNeededRequest amounter)
         {

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UpravlenieRC.Client.ViewModels;
 
 namespace UpravlenieRC.Client.pages.admin
 {
@@ -20,7 +21,7 @@ namespace UpravlenieRC.Client.pages.admin
     /// </summary>
     public partial class GoodsAdminPage : Page
     {
-        public GoodsAdminPage()
+        public GoodsAdminPage(GoodsNeededInfo good)
         {
             InitializeComponent();
         }

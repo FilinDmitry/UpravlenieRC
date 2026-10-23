@@ -4,7 +4,7 @@ namespace UpravlenieRC.Server.DTO
 {
     public class GoodsDTO
     {
-        int Id {  get; set; }
+        public int Id {  get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
 
@@ -19,18 +19,21 @@ namespace UpravlenieRC.Server.DTO
         public double WeightForOneUnit { get; set; }
         public bool IsInStopList { get; set; }
 
-        public GoodsDTO(Good good)
+        public static GoodsDTO CreateGoodsDTO(Good good)
         {
-            Id = good.Id;
-            Name = good.Name;
-            Category = good.IdCategoryNavigation.Name;
-            Manufacturer = good.IdmanufacturerNavigation.Name;
-            Units = good.IdunitsNavigation.Name;
-            Maxtemperature = good.Maxtemperature;
-            Mintemperature = good.Mintemperature;
-            VolumeInLitr = good.VolumeInLitr;
-            WeightForOneUnit = good.WeightForOneUnit;
-            IsInStopList = good.IsInStopList;
+            return new GoodsDTO
+            {
+                Id = good.Id,
+                Name = good.Name,
+                Category = good.IdCategoryNavigation.Name,
+                Manufacturer = good.IdmanufacturerNavigation.Name,
+                Units = good.IdunitsNavigation.Name,
+                Maxtemperature = good.Maxtemperature,
+                Mintemperature = good.Mintemperature,
+                VolumeInLitr = good.VolumeInLitr,
+                WeightForOneUnit = good.WeightForOneUnit,
+                IsInStopList = good.IsInStopList,
+            };
         }
     }
 }

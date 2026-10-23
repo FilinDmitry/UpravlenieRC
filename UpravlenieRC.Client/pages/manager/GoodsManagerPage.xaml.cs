@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UpravlenieRC.Client.modules;
+using UpravlenieRC.Client.pages.admin;
 using UpravlenieRC.Client.ViewModels;
 
 namespace UpravlenieRC.Client.pages.manager
@@ -24,9 +27,15 @@ namespace UpravlenieRC.Client.pages.manager
     public partial class GoodsManagerPage : Page
     {
         private ObservableCollection<GoodsNeededInfo> _goods = new();
+        public bool CanEdit => (AuthAndRegestration.Role == UserRoles.Admin);
         public GoodsManagerPage()
         {
+            
             InitializeComponent();
+            if (AuthAndRegestration.Role == UserRoles.Admin)
+            {
+                
+            }
             Loaded += async (s, e) => await InitializeData();
         }
 
@@ -66,9 +75,7 @@ namespace UpravlenieRC.Client.pages.manager
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             var changed = _goods.Where(g => g.isChanged).ToList();
-
-
-            
+            await Http.ChangeGoodsNeeded(changed);
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e) 
@@ -81,7 +88,7 @@ namespace UpravlenieRC.Client.pages.manager
         }
         private void Filter()
         {
-            List<GoodsNeededInfo> list = _goods.ToList();
+            List<GoodsNeededInfo> list = _goods.Where(g => !g.IsInStopList).ToList();
             if (CB_Categories.SelectedValue != null)
             {
                 if (CB_Categories.SelectedIndex != 0)
@@ -111,6 +118,41 @@ namespace UpravlenieRC.Client.pages.manager
         private void Change_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void Change_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            GoodsNeededInfo item = btn.DataContext as GoodsNeededInfo;
+            if (item != null)
+            {
+                NavigationService.Navigate(new GoodsAdminPage(item));
+            }
+        }
+
+        private async void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            GoodsNeededInfo item = btn.DataContext as GoodsNeededInfo;
+            
+            if (item != null)
+            {
+                item.IsInStopList = true;
+                HttpStatusCode code = await Http.AdminFunc.DeleteGood(item);
+                switch ((int)code)
+                {
+                    case 204:
+                        MessageBox.Show("Успешно удалено");
+                        break;
+                    case 404:
+                        MessageBox.Show("Товар не найден в базе данных");
+                        break;
+                    default:
+                        MessageBox.Show("Произошла непредвиденная ошибка на сервере. Попробуйте повторить попытку позже");
+                        break;
+                }
+            }
+            Filter();
         }
     }
 }

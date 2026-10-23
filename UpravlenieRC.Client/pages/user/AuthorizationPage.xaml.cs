@@ -86,7 +86,7 @@ namespace UpravlenieRC.Client.pages
             switch (role)
             {
                 case UserRoles.Admin:
-                    return new GoodsAdminPage();
+                    return new GoodsManagerPage();
                 case UserRoles.Partner:
                     return new GoodsPartnerPage();
                 case UserRoles.Manager:

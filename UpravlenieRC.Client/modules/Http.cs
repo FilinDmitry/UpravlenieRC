@@ -70,6 +70,13 @@ namespace UpravlenieRC.Client.modules
                 MessageBox.Show("Пользователь успешно создан");
                 return true;
             }
+            public static async Task<HttpStatusCode> DeleteGood(GoodsNeededInfo goodsNeededInfo)
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, Urls.DeleteGoods(goodsNeededInfo.Id));
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                return response.StatusCode;
+            }
         }
         public static class Urls
         {
@@ -86,6 +93,7 @@ namespace UpravlenieRC.Client.modules
             public static string DenyRegUrl(int id) => RegUrl + "/" + id + "/decline";
 
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
+            public static string DeleteGoods(int id) => BaseUrl + "Goods/" + id;
             public const string GoodsCategoryUrl = BaseUrl + "Goods/Categories";
             public const string CreateUserUrl = RegUrl + "/create";
             public const string CreateArrivalOrderUrl = BaseUrl + "Arrival/Order";
@@ -107,6 +115,22 @@ namespace UpravlenieRC.Client.modules
             }
             return response.StatusCode;
         }
+        public static async Task<HttpStatusCode> ChangeGoodsNeeded(List<GoodsNeededInfo> goodsNeededInfo)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, Urls.GoodsNeededUrl);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+            var dict = goodsNeededInfo.ToDictionary(
+                    gn => gn.Id,
+                    gn => new { gn.Amount, gn.Price }
+                );
+            request.Content = new StringContent(JsonSerializer.Serialize(dict), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await httpClient.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(await response.Content.ReadAsStringAsync());
+            }
+            return response.StatusCode;
+        }
         public static async Task<ObservableCollection<GoodsNeededInfo>?> GetGoodsNeeded()
         {
 
@@ -124,7 +148,7 @@ namespace UpravlenieRC.Client.modules
             HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsCategoryUrl);
             if (response.IsSuccessStatusCode)
             {
-                return (await response.Content.ReadFromJsonAsync<List<string>>());
+                return await response.Content.ReadFromJsonAsync<List<string>>();
             }
 
             return new();

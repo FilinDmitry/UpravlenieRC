@@ -5,7 +5,7 @@ namespace UpravlenieRC.Server.DTO
     public record ChangeNeededRequest(int amount, double? price);
     public class GoodsNeededInfo
     {
-    
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
