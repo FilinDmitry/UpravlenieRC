@@ -8,13 +8,62 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GoodsAdminPage">
     <Page.Resources>
-        <Style  BasedOn="{StaticResource DefaultTB}" TargetType="TextBlock"/>
+        <Style BasedOn="{StaticResource DefaultTB}" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0, 10"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="10"></Setter>
+            <Setter Property="Width" Value="400"></Setter>
+            <Setter Property="FontSize" Value="12"></Setter>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Orientation" Value="Horizontal"></Setter>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="AUTO"></RowDefinition>
+            <RowDefinition Height="AUTO"></RowDefinition>
+            <RowDefinition Height="AUTO"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button x:Name="Change"></Button>
+        <StackPanel>
+            <TextBlock x:Name="TB_TovarName" Text="Name"></TextBlock>
+            <TextBox></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Category"></TextBlock>
+            <ComboBox x:Name="CB_TovarCategory" Height="40" Style="{StaticResource Combo}" DisplayMemberPath="name"></ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <TextBlock  Text="Units"></TextBlock>
+            <ComboBox  x:Name="CB_TovarUnits" Height="40" Style="{StaticResource Combo}" DisplayMemberPath="name"></ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Row="3">
+            <TextBlock  Text="Manufacturer"></TextBlock>
+            <ComboBox x:Name="CB_TovarManufact" Height="40" Style="{StaticResource Combo}" DisplayMemberPath="name"></ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Row="4">
+            <TextBlock  Text="MinTemp"></TextBlock>
+            <TextBox x:Name="TB_MinTemp" Width="60"></TextBox>
+            <TextBlock  Text="MaxTemp"></TextBlock>
+            <TextBox x:Name="TB_MaxTemp" Width="60"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="5">
+            <TextBlock Text="Volume"></TextBlock>
+            <TextBox x:Name="TB_Volume" Width="60"></TextBox>
+            <TextBlock Text="Weight"></TextBlock>
+            <TextBox x:Name="TB_Weight"  Width="60"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="6">
+            <TextBlock  Text="Price"></TextBlock>
+            <TextBox x:Name="TB_Price"></TextBox>
+        </StackPanel>
+        <Button Margin="0" Content="Изменить/создать" Click="Change_Click" Grid.Row="7" x:Name="Change"></Button>
     </Grid>
 </Page>

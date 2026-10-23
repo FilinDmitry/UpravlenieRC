@@ -34,8 +34,8 @@ namespace UpravlenieRC.Client.pages.partner
         }
         private async Task InilizeData()
         {
-            Task<List<string>> categories = GoodsNeededInfo.GetCategories();
-            List<string> categories_lst = await categories;
+            Task<List<NameWithIdDTO>> categories = GoodsNeededInfo.GetCategories();
+            List<string> categories_lst = (await categories).Select(i => i.name).ToList();
             categories_lst.Insert(0, "Все категории");
             CB_Categories.ItemsSource = categories_lst;
             CB_Categories.SelectedIndex = 0;

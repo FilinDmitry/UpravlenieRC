@@ -12,14 +12,17 @@ namespace UpravlenieRC.Server.Services
         {
             _context = context;
         }
-        public async Task<List<GoodsDTO>> GetGoods()
+        public async Task<GoodsDTO> GetGood(int id)
         {
-            return await _context.Goods.Where(g => !g.IsInStopList)
-                .Include(g => g.IdCategoryNavigation)
-                .Include(g => g.IdunitsNavigation)
-                .Include(g => g.IdmanufacturerNavigation)
-                .Include(g => g.GoodsNeeded)
-                .Select(u => GoodsDTO.CreateGoodsDTO(u)).ToListAsync();
+            Good? good = await _context.Goods.FirstOrDefaultAsync(i => i.Id == id);
+            if (good == null)
+            {
+                return null;
+            }
+            else
+            {
+                return GoodsDTO.CreateGoodsDTO(good);
+            }
         }
         public async Task<List<GoodsNeededInfo>> GetNeededGoods()
         {
@@ -153,9 +156,17 @@ namespace UpravlenieRC.Server.Services
             await _context.SaveChangesAsync();
             return new ResponseWithMessage(HttpStatusCode.OK, "Количество успешно изменено");
         }
-        public async Task<List<string>> GetCategories()
+        public async Task<List<NameWithIdDTO>> GetCategories()
         {
-            return await _context.TovarCategories.Select(c => c.Name).ToListAsync();
+            return await _context.TovarCategories.Select(c => new NameWithIdDTO(c.Id, c.Name)).ToListAsync();
+        }
+        public async Task<List<NameWithIdDTO>> GetManufacturers()
+        {
+            return await _context.Manufacturers.Select(c => new NameWithIdDTO(c.Id, c.Name)).ToListAsync();
+        }
+        public async Task<List<NameWithIdDTO>> GetUnits()
+        {
+            return await _context.Units.Select(c => new NameWithIdDTO(c.Id, c.Name)).ToListAsync();
         }
     }
 }

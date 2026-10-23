@@ -15,9 +15,10 @@ namespace UpravlenieRC.Server.Controllers
             _service = service;
         }
         [HttpGet]
-        public async Task<IActionResult> GetGoods()
+        [Route("{id}")]
+        public async Task<IActionResult> GetGood(int id)
         {
-            return Ok(await _service.GetGoods());
+            return Ok(await _service.GetGood(id));
             /*AuthServiceController response = await _service.Auth(request);
             switch ((int)response.Code)
             {
@@ -128,6 +129,18 @@ namespace UpravlenieRC.Server.Controllers
         public async Task<IActionResult> GetCategories()
         {
             return Ok(await _service.GetCategories());
+        }
+        [HttpGet]
+        [Route("Units")]
+        public async Task<IActionResult> GetUnits()
+        {
+            return Ok(await _service.GetUnits());
+        }
+        [HttpGet]
+        [Route("Manufacturers")]
+        public async Task<IActionResult> GetManufacturers()
+        {
+            return Ok(await _service.GetManufacturers());
         }
     }
 }

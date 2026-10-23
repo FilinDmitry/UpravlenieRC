@@ -99,7 +99,7 @@ namespace UpravlenieRC.Client.ViewModels
         {
             return await Http.GetGoodsNeeded();
         }
-        public static async Task<List<string>> GetCategories()
+        public static async Task<List<NameWithIdDTO>> GetCategories()
         {
             return await Http.GetCategories();
         }

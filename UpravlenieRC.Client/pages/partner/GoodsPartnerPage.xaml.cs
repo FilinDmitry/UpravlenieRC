@@ -36,8 +36,8 @@ namespace UpravlenieRC.Client.pages.partner
         }
         private async Task InitializeDataFromCartAsync(ObservableCollection<GoodsNeededInfo> goods)
         {
-            Task<List<string>> categories = GoodsNeededInfo.GetCategories();
-            List<string> categories_lst = await categories;
+            Task<List<NameWithIdDTO>> categories = GoodsNeededInfo.GetCategories();
+            List<string> categories_lst = (await categories).Select(i => i.name).ToList();
             categories_lst.Insert(0, "Все категории");
             CB_Categories.ItemsSource = categories_lst;
             CB_Categories.SelectedIndex = 0;
@@ -47,9 +47,9 @@ namespace UpravlenieRC.Client.pages.partner
 
         private async Task InitializeDataAsync()
         {
-            Task<List<string>> categories = GoodsNeededInfo.GetCategories();
+            Task<List<NameWithIdDTO>> categories = GoodsNeededInfo.GetCategories();
             var goods = GoodsNeededInfo.GetGoodsNeeded();
-            List<string> categories_lst = await categories;
+            List<string> categories_lst = (await categories).Select(i => i.name).ToList();
             categories_lst.Insert(0, "Все категории");
             CB_Categories.ItemsSource = categories_lst;
             CB_Categories.SelectedIndex = 0;

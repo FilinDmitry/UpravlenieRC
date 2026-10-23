@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UpravlenieRC.Client.modules;
 using UpravlenieRC.Client.ViewModels;
 
 namespace UpravlenieRC.Client.pages.admin
@@ -24,13 +25,27 @@ namespace UpravlenieRC.Client.pages.admin
         public GoodsAdminPage(GoodsNeededInfo good)
         {
             InitializeComponent();
+            Loaded += async (s, e) => await InitializeData();
         }
         public GoodsAdminPage()
         {
             InitializeComponent();
+            Loaded += async (s, e) => await InitializeData();
+        }
+        private async Task InitializeData()
+        {
+            var manTask = Http.GetManufacturers();
+            var catTask = Http.GetCategories();
+            var UnitsTask = Http.GetUnits();
+            CB_TovarCategory.ItemsSource = await catTask;
+            CB_TovarManufact.ItemsSource = await manTask;
+            CB_TovarUnits.ItemsSource = await UnitsTask;
+
         }
 
-        
+        private void Change_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

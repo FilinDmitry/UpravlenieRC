@@ -93,8 +93,11 @@ namespace UpravlenieRC.Client.modules
             public static string DenyRegUrl(int id) => RegUrl + "/" + id + "/decline";
 
             public static string GoodsNeededChangeUrl(int id) => BaseUrl + "Goods/needed/" + id;
+            public static string GetGood(int id) => BaseUrl + "Goods/" + id;
             public static string DeleteGoods(int id) => BaseUrl + "Goods/" + id;
             public const string GoodsCategoryUrl = BaseUrl + "Goods/Categories";
+            public const string GoodsManufacturersUrl = BaseUrl + "Goods/Manufacturers";
+            public const string GoodsUnitsUrl = BaseUrl + "Goods/Units";
             public const string CreateUserUrl = RegUrl + "/create";
             public const string CreateArrivalOrderUrl = BaseUrl + "Arrival/Order";
         }
@@ -142,16 +145,38 @@ namespace UpravlenieRC.Client.modules
 
             return null;
         }
-        public static async Task<List<string>> GetCategories()
+        public static async Task<List<NameWithIdDTO>> GetCategories()
         {
 
             HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsCategoryUrl);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<List<string>>();
+                return (await response.Content.ReadFromJsonAsync<List<NameWithIdDTO>>());
             }
 
-            return new();
+            return null;
+        }
+        public static async Task<List<NameWithIdDTO>> GetUnits()
+        {
+
+            HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsUnitsUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                return (await response.Content.ReadFromJsonAsync<List<NameWithIdDTO>>());
+            }
+
+            return null;
+        }
+        public static async Task<List<NameWithIdDTO>> GetManufacturers()
+        {
+
+            HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsManufacturersUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                return (await response.Content.ReadFromJsonAsync<List<NameWithIdDTO>>());
+            }
+
+            return null;
         }
         record CreateUser(string Login, string Password, string Role, string? Phone = null, string? Email = null);
         
