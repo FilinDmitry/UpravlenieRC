@@ -22,5 +22,9 @@ namespace UpravlenieRC.Client.ViewModels
 
         public double WeightForOneUnit { get; set; }
         public bool IsInStopList { get; set; }
+        public int ManufacturerID { get; set; }
+        public int UnitsID { get; set; }
+        public int CategoryID { get; set; }
+        public double Price { get; set; }
     }
 }

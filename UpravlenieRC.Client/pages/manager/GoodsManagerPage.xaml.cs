@@ -137,6 +137,14 @@ namespace UpravlenieRC.Client.pages.manager
             
             if (item != null)
             {
+                var result = MessageBox.Show(
+                        "Вы уверены, что хотите удалить товар?",
+                        "Подтверждение",
+                        MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.No)
+                {
+                    return;
+                }
                 item.IsInStopList = true;
                 HttpStatusCode code = await Http.AdminFunc.DeleteGood(item);
                 switch ((int)code)
@@ -153,6 +161,11 @@ namespace UpravlenieRC.Client.pages.manager
                 }
             }
             Filter();
+        }
+
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new GoodsAdminPage());
         }
     }
 }

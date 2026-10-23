@@ -18,6 +18,7 @@ namespace UpravlenieRC.Server.Services
                 .Include(g => g.IdCategoryNavigation)
                 .Include(g => g.IdunitsNavigation)
                 .Include(g => g.IdmanufacturerNavigation)
+                .Include(g => g.GoodsNeeded)
                 .Select(u => GoodsDTO.CreateGoodsDTO(u)).ToListAsync();
         }
         public async Task<List<GoodsNeededInfo>> GetNeededGoods()
@@ -43,10 +44,77 @@ namespace UpravlenieRC.Server.Services
             await _context.SaveChangesAsync();
             return new ResponseWithMessage(HttpStatusCode.NoContent, "");
         }
-        public async Task<ResponseWithMessage> ChangeGood(int goodId, GoodsDTO goods)
+        public async Task<ResponseWithMessage> ChangeGood(int goodId, GoodsDTO good)
         {
+            try
+            {
+                Good? goodExisted = await _context.Goods.FirstOrDefaultAsync(i => i.Id == good.Id);
+                if (goodId == 0 || goodExisted == null)
+                {
+                    if (await _context.TovarCategories.FirstOrDefaultAsync(i => i.Id == good.CategoryID) == null)
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.BadRequest, "Такой категории не найдено");
+                    }
+                    if (await _context.Units.FirstOrDefaultAsync(i => i.Id == good.UnitsID) == null)
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.BadRequest, "Такой единицы измерения не найдено");
+                    }
+                    if (await _context.Manufacturers.FirstOrDefaultAsync(i => i.Id == good.ManufacturerID) == null)
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.BadRequest, "Такой производитель не найден");
+                    }
+                    Good createdGood = GoodsDTO.CreateGoodFromDTO(good);
+                    
+                    await _context.Goods.AddAsync(createdGood);
+                    await _context.SaveChangesAsync();
+                    GoodsNeeded needed = new GoodsNeeded()
+                    {
+                        GoodId = createdGood.Id,
+                        Amount = 0,
+                        Price = good.Price,
+                    };
+                    await _context.GoodsNeededs.AddAsync(needed);
+                    await _context.SaveChangesAsync();
+                    return new ResponseWithMessage(HttpStatusCode.Created, "Новый товар успешно создан");
+                }
+                else
+                {
+                    
+                    
+                    if (await _context.TovarCategories.FirstOrDefaultAsync(i => i.Id == good.CategoryID) == null)
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.BadRequest, "Такой категории не найдено");
+                    }
+                    if (await _context.Units.FirstOrDefaultAsync(i => i.Id == good.UnitsID) == null)
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.BadRequest, "Такой единицы измерения не найдено");
+                    }
+                    if (await _context.Manufacturers.FirstOrDefaultAsync(i => i.Id == good.ManufacturerID) == null)
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.BadRequest, "Такой производитель не найден");
+                    }
+                    goodExisted.Name = good.Name;
+                    goodExisted.Mintemperature = good.Mintemperature;
+                    goodExisted.Maxtemperature = good.Maxtemperature;
+                    goodExisted.Idmanufacturer = good.ManufacturerID;
+                    goodExisted.Idunits = good.UnitsID;
+                    goodExisted.IdCategory = good.CategoryID;
+                    goodExisted.IsInStopList = false;
+                    goodExisted.VolumeInLitr = good.VolumeInLitr;
+                    goodExisted.WeightForOneUnit = good.WeightForOneUnit;
+                    if (goodExisted.GoodsNeeded != null)
+                    {
+                        goodExisted.GoodsNeeded.Price = good.Price;
+                    }
+                    await _context.SaveChangesAsync();
+                    return new ResponseWithMessage(HttpStatusCode.OK, "Товар успешно изменен");
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseWithMessage(HttpStatusCode.InternalServerError, "произошла непредвиденная ошибка");
+            }
             
-            return new ResponseWithMessage(HttpStatusCode.NotImplemented, "");
         }
         public async Task<ResponseWithMessage> SetNeededGoods(int id, int amount, double? price)
         {

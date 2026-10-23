@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
             <Border>
@@ -148,6 +149,10 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+            <Button  Margin="0" Content="Создать новый товар" Click="Create_Click"></Button>
+            <!--<Button  Margin="0"  Content="Восстановить товар" Click="Restore_Click"></Button>-->
+        </StackPanel>
     </Grid>
 </Page>
 

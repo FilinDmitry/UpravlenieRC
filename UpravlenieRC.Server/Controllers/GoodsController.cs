@@ -34,16 +34,38 @@ namespace UpravlenieRC.Server.Controllers
             }*/
         }
         [HttpPut]
+        public async Task<IActionResult> CreateGood(GoodsDTO goods)
+        {
+            ResponseWithMessage response = await _service.ChangeGood(0, goods);
+            switch ((int)response.Code)
+            {
+                case 201:
+                    return Created();
+                case 400:
+                    return BadRequest(response.message);
+                case 404:
+                    return NotFound(response.message);
+                case 200:
+                    return Ok(response.message);
+                default:
+                    return Problem();
+            }
+        }
+        [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> ChangeGood(int id, GoodsDTO goods)
         {
             ResponseWithMessage response = await _service.ChangeGood(id, goods);
             switch ((int)response.Code)
             {
-                case 204:
-                    return NoContent();
+                case 201:
+                    return Created();
+                case 400:
+                    return BadRequest(response.message);
                 case 404:
-                    return NotFound();
+                    return NotFound(response.message);
+                case 200:
+                    return Ok(response.message);
                 default:
                     return Problem();
             }

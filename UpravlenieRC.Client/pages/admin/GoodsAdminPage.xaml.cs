@@ -25,14 +25,12 @@ namespace UpravlenieRC.Client.pages.admin
         {
             InitializeComponent();
         }
-        private void CB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public GoodsAdminPage()
         {
-
+            InitializeComponent();
         }
 
-        private void Search_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        
 
-        }
     }
 }
