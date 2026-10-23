@@ -93,6 +93,7 @@
                                 <StackPanel>
                                     <TextBlock Text="{Binding Name}"></TextBlock>
                                     <TextBlock Text="{Binding Price, StringFormat={}{0} руб.}"></TextBlock>
+                                    <TextBlock Text="{Binding Amount, StringFormat=Макс кол-во: {0}}"></TextBlock>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"></ColumnDefinition>

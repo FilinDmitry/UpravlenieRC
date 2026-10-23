@@ -26,6 +26,24 @@ namespace UpravlenieRC.Server.Services
                 {
                     return new ResponseWithMessage(HttpStatusCode.Unauthorized, "У отправителя не указан партнер, обратитесь в службу тех. поддержки");
                 }
+                var neededItems = await _context.GoodsNeededs
+                                        .Where(gn => goods.Select(g => g.Id).Contains(gn.GoodId))
+                                        .ToDictionaryAsync(gn => gn.GoodId);
+                foreach (var item in goods)
+                {
+                    if (!neededItems.TryGetValue(item.Id, out var needed))
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.BadRequest, $"Товар с ID {item.Id} не найден в остатках");
+                    }
+
+                    if (needed.Amount < item.AmountToSell)
+                    {
+                        return new ResponseWithMessage(
+                            HttpStatusCode.BadRequest,
+                            $"Количество необходимого продукта {item.Name} меньше чем указано в поставке, пожалуйста обновите страницу и измените заказ");
+                    }
+                    needed.Amount -= item.AmountToSell;
+                }
                 ArrivalOrder arrivalOrder = new ArrivalOrder()
                 {
                     Idpartner = (int)user.Idpartner

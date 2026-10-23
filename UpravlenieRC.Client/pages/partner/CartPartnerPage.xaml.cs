@@ -119,6 +119,7 @@ namespace UpravlenieRC.Client.pages.partner
             if (result == MessageBoxResult.Yes)
             {
                 await Http.CreateArrivalOrder(_goodsList.Where(i => i.AmountToSell > 0).ToList());
+                NavigationService.Navigate(new GoodsPartnerPage());
             }
         }
     }

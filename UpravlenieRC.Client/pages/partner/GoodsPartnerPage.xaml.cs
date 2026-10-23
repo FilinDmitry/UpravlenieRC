@@ -59,7 +59,9 @@ namespace UpravlenieRC.Client.pages.partner
 
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.DataContext is GoodsNeededInfo item)
+            Button btn = sender as Button;
+            GoodsNeededInfo item = btn.DataContext as GoodsNeededInfo;
+            if (item.AmountToSell < item.Amount)
             {
                 item.AmountToSell += 1;
             }

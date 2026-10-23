@@ -72,6 +72,10 @@ namespace UpravlenieRC.Client.ViewModels
             {
                 if (_amountToCell != value || value >= 0)
                 {
+                    if (value >= Amount)
+                    {
+                        _amountToCell = Amount;
+                    }
                     _amountToCell = value;
                     OnPropertyChanged();
                 }

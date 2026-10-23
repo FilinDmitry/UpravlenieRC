@@ -9,7 +9,7 @@ public partial class GoodsNeeded
 {
     public int GoodId { get; set; }
 
-    public int Amount { get; set; }
+    public double Amount { get; set; }
 
     public double Price { get; set; }
 

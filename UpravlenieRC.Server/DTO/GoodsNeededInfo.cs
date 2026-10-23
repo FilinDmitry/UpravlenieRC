@@ -16,7 +16,7 @@ namespace UpravlenieRC.Server.DTO
         public bool IsInStopList { get; set; }
         public double Price { get; set; }
         
-        public int AmountToSell { get; set; } = 0;
+        public double AmountToSell { get; set; } = 0;
         public GoodsNeededInfo(GoodsNeeded good)
         {
             Id = good.GoodId;
