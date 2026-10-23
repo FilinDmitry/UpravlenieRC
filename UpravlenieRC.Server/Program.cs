@@ -30,6 +30,7 @@ builder.Services.AddScoped<AuthAndRegService>();
 builder.Services.AddScoped<CellBalanceServices>();
 builder.Services.AddScoped<GoodsService>();
 builder.Services.AddScoped<ArrivalService>();
+builder.Services.AddScoped<ChartsService>();
 
 var app = builder.Build();
 app.UseAuthentication();

@@ -129,6 +129,8 @@ namespace UpravlenieRC.Client
                     return new InventarizationPage();
                 case UserRoles.skladWorker:
                     return new InventarizationPage();
+                case UserRoles.Manager:
+                    return new ArrivalOrdersStatistikPage();
                 default:
                     return new ProfilePage();
             }
@@ -220,7 +222,7 @@ namespace UpravlenieRC.Client
         private void ManagerMenuVisinility()
         {
             Orders.Visibility = Visibility.Visible;
-            Statistic.Visibility = Visibility.Collapsed;
+            Statistic.Visibility = Visibility.Visible;
             Administration.Visibility = Visibility.Collapsed;
         }
         private void SkladWorkerMenuVisinility()

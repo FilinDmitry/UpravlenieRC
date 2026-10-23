@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -100,6 +101,7 @@ namespace UpravlenieRC.Client.modules
             public const string GoodsUnitsUrl = BaseUrl + "Goods/Units";
             public const string CreateUserUrl = RegUrl + "/create";
             public const string CreateArrivalOrderUrl = BaseUrl + "Arrival/Order";
+            public const string ChartOrders = BaseUrl + "charts/orders";
         }
         public static async Task<HttpStatusCode> CreateArrivalOrder(List<GoodsNeededInfo> goodsNeededInfo)
         {
