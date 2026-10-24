@@ -40,7 +40,11 @@ namespace UpravlenieRC.Client.modules
             {
                 SetToken((await response.Content.ReadFromJsonAsync<JWTToken>())?.access_token);
             }
-            return response.StatusCode;
+            else 
+            {
+                MessageBox.Show(await response.Content.ReadAsStringAsync());
+            }
+                return response.StatusCode;
         }
         public static void SetWindow(MainWindow mw)
         {
@@ -98,7 +102,10 @@ namespace UpravlenieRC.Client.modules
         {
             
             HttpResponseMessage response = await Http.httpClient.PostAsJsonAsync(Http.Urls.RegUrl, new RegRequest(login, password, INN, message));
-            MessageBox.Show(response.StatusCode.ToString());
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                MessageBox.Show("Заявка успешно создана");
+            }
             return response.StatusCode;
         }
         public static async Task<HttpStatusCode> ChangeEmailAsync(string email, string password)
@@ -107,25 +114,25 @@ namespace UpravlenieRC.Client.modules
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Http.JWTBearer);
             request.Content = new StringContent(JsonSerializer.Serialize(new ChangeEmailRequest(password, email)), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await Http.httpClient.SendAsync(request);
-            MessageBox.Show(response.StatusCode.ToString());
+            MessageBox.Show(await response.Content.ReadAsStringAsync());
             return response.StatusCode;
         }
         public static async Task<HttpStatusCode> ChangePhoneAsync(string phone, string password)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, Http.Urls.ChangeEmailUrl);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, Http.Urls.ChangePhoneUrl);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Http.JWTBearer);
             request.Content = new StringContent(JsonSerializer.Serialize(new ChangePhoneRequest(password, phone)), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await Http.httpClient.SendAsync(request);
-            MessageBox.Show(response.StatusCode.ToString());
+            MessageBox.Show(await response.Content.ReadAsStringAsync());
             return response.StatusCode;
         }
         public static async Task<HttpStatusCode> ChangePasswordAsync(string oldPassword, string newPassword)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, Http.Urls.ChangeEmailUrl);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, Http.Urls.ChangePasswordUrl);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Http.JWTBearer);
             request.Content = new StringContent(JsonSerializer.Serialize(new ChangePasswordRequest(oldPassword, newPassword)), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await Http.httpClient.SendAsync(request);
-            MessageBox.Show(response.StatusCode.ToString());
+            MessageBox.Show(await response.Content.ReadAsStringAsync());
             return response.StatusCode;
         }
     }

@@ -147,7 +147,7 @@ namespace UpravlenieRC.Client
 
         private void TgBtn_Unchecked(object sender, RoutedEventArgs e)
         {
-            ChangeTooltipVisibility(Visibility.Hidden);
+            ChangeTooltipVisibility(Visibility.Visible);
             menu_column.Width = new GridLength(65);
             NavPanel.Width = 65;
             TgBtn.IsChecked = false;

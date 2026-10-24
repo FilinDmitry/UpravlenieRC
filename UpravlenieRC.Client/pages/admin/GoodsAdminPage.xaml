@@ -60,15 +60,15 @@
         </StackPanel>
         <StackPanel Grid.Row="4">
             <TextBlock  Text="MinTemp"></TextBlock>
-            <TextBox x:Name="TB_MinTemp" Width="60"></TextBox>
+            <TextBox PreviewTextInput="TB_Num_PreviewTextInput" x:Name="TB_MinTemp" Width="60"></TextBox>
             <TextBlock  Text="MaxTemp"></TextBlock>
-            <TextBox x:Name="TB_MaxTemp" Width="60"></TextBox>
+            <TextBox PreviewTextInput="TB_Num_PreviewTextInput" x:Name="TB_MaxTemp" Width="60"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="5">
             <TextBlock Text="Volume"></TextBlock>
-            <TextBox x:Name="TB_Volume" Width="60"></TextBox>
+            <TextBox PreviewTextInput="TB_Num_PreviewTextInput" x:Name="TB_Volume" Width="60"></TextBox>
             <TextBlock Text="Weight"></TextBlock>
-            <TextBox x:Name="TB_Weight"  Width="60"></TextBox>
+            <TextBox PreviewTextInput="TB_Num_PreviewTextInput" x:Name="TB_Weight"  Width="60"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="6">
             <TextBlock  Text="Price"></TextBlock>

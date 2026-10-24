@@ -32,7 +32,6 @@ namespace UpravlenieRC.Client.ViewModels
 
                 var response = await Http.httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                MessageBox.Show(response.StatusCode.ToString());
                 using var contentStream = await response.Content.ReadAsStreamAsync();
                 var options = new System.Text.Json.JsonSerializerOptions
                 {
@@ -44,8 +43,7 @@ namespace UpravlenieRC.Client.ViewModels
             }
             catch (Exception ex)
             {
-                // Тут можно показать сообщение пользователю (через событие/команду)
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                MessageBox.Show("произошла непредвиденная ошибка");
             }
             finally
             {

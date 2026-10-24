@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,6 +118,35 @@ namespace UpravlenieRC.Client.pages.admin
             await Http.AdminFunc.ChangeGood(_good);
             
 
+        }
+
+        private void TB_Num_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb == null) return;
+
+            string proposedText = tb.Text + e.Text;
+
+            if (string.IsNullOrEmpty(proposedText))
+                return;
+
+            char separator = '.';
+
+            foreach (char c in e.Text)
+            {
+                if (!char.IsDigit(c) && c != separator)
+                {
+                    e.Handled = true; 
+                    return;
+                }
+            }
+
+            int separatorCount = proposedText.Count(c => c == separator);
+            if (separatorCount > 1)
+            {
+                e.Handled = true;
+                return;
+            }
         }
     }
 }

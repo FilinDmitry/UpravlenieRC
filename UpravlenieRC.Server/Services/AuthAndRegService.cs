@@ -204,7 +204,7 @@ namespace UpravlenieRC.Server.Services
             }
 
 
-            var CheckNew = hasher.VerifyHashedPassword(user, user.Password, request.OldPassword);
+            var CheckNew = hasher.VerifyHashedPassword(user, user.Password, request.NewPassword);
             if (CheckNew == PasswordVerificationResult.Success)
             {
                 return new ResponseWithMessage(HttpStatusCode.BadRequest, "Новый пароль не может совпадать со старым");
