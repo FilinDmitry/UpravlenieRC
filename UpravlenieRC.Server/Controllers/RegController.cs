@@ -67,7 +67,6 @@ namespace UpravlenieRC.Server.Controllers
         }
         [HttpGet]
         [Route("GetRoles")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetRolesToCreate()
         {
             return Ok(await _service.GetRoles());

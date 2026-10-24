@@ -8,7 +8,7 @@ namespace UpravlenieRC.Server.Controllers
 {
     [Route("api/Inventarization")]
     [ApiController]
-    [AllowAnonymous]
+    [Authorize(Roles = "Администратор,Сотрудник склада")]
     public class InventarizationController : ControllerBase
     {
         InvantarizationService _service;
@@ -18,13 +18,10 @@ namespace UpravlenieRC.Server.Controllers
         }
 
         [HttpGet]
-        
         public async Task<IActionResult> GetExcel()
         {
              FileData fd = await _service.GetInventarizationExcel();  
              return File(fd.content, fd.type, fd.filename);
-            
-
         }
     }
 }

@@ -43,14 +43,7 @@ namespace UpravlenieRC.Client.pages.admin
                 return;
             }
             bool result = await Http.AdminFunc.CreateUser(TB_Login.Text, TB_password.Password, TB_email.Text, TB_Phone.Text, CB_Role.SelectedItem.ToString());
-            if (result)
-            {
-                MessageBox.Show("Пользователь успешно создан");
-            }
-            else
-            {
-                MessageBox.Show("Что-то пошло не так");
-            }
+            
         }
     }
 }

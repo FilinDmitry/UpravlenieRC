@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UpravlenieRC.Server.DTO;
 using UpravlenieRC.Server.Services;
@@ -7,6 +8,7 @@ namespace UpravlenieRC.Server.Controllers
 {
     [Route("api/Goods")]
     [ApiController]
+    [Authorize]
     public class GoodsController : ControllerBase
     {
         GoodsService _service;
@@ -22,6 +24,7 @@ namespace UpravlenieRC.Server.Controllers
 
         }
         [HttpPut]
+        [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> CreateGood(GoodsDTO goods)
         {
             ResponseWithMessage response = await _service.ChangeGood(0, goods);
@@ -43,6 +46,7 @@ namespace UpravlenieRC.Server.Controllers
         }
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> ChangeGood(int id, GoodsDTO goods)
         {
             ResponseWithMessage response = await _service.ChangeGood(id, goods);
@@ -62,6 +66,7 @@ namespace UpravlenieRC.Server.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> StopGood(int id)
         {
             ResponseWithMessage response = await _service.StopGood(id);

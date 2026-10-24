@@ -176,8 +176,9 @@ namespace UpravlenieRC.Client.modules
         }
         public static async Task<ObservableCollection<GoodsNeededInfo>?> GetGoodsNeeded()
         {
-
-            HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsNeededUrl);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Urls.GoodsNeededUrl);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+            HttpResponseMessage response = await httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return (await response.Content.ReadFromJsonAsync<ObservableCollection<GoodsNeededInfo>>());
@@ -187,8 +188,9 @@ namespace UpravlenieRC.Client.modules
         }
         public static async Task<List<NameWithIdDTO>> GetCategories()
         {
-
-            HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsCategoryUrl);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Urls.GoodsCategoryUrl);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+            HttpResponseMessage response = await httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return (await response.Content.ReadFromJsonAsync<List<NameWithIdDTO>>());
@@ -198,8 +200,9 @@ namespace UpravlenieRC.Client.modules
         }
         public static async Task<List<NameWithIdDTO>> GetUnits()
         {
-
-            HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsUnitsUrl);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Urls.GoodsUnitsUrl);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+            HttpResponseMessage response = await httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return (await response.Content.ReadFromJsonAsync<List<NameWithIdDTO>>());
@@ -209,8 +212,9 @@ namespace UpravlenieRC.Client.modules
         }
         public static async Task<List<NameWithIdDTO>> GetManufacturers()
         {
-
-            HttpResponseMessage response = await httpClient.GetAsync(Urls.GoodsManufacturersUrl);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Urls.GoodsManufacturersUrl);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+            HttpResponseMessage response = await httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return (await response.Content.ReadFromJsonAsync<List<NameWithIdDTO>>());

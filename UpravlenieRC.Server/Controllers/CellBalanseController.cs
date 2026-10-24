@@ -10,7 +10,7 @@ namespace UpravlenieRC.Server.Controllers
 {
     [Route("api/CellBalanse")]
     [ApiController]
-    [AllowAnonymous] // заглушка для теста
+    [Authorize]
     public class CellBalanseController : ControllerBase
     {
         CellBalanceServices _service;

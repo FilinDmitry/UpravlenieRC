@@ -2,10 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Windows;
+using static UpravlenieRC.Client.modules.Http;
 
 namespace UpravlenieRC.Client.modules
 {
@@ -17,7 +21,9 @@ namespace UpravlenieRC.Client.modules
         public static async Task<bool> Inventarization()
         {
             try {
-                var response = await Http.httpClient.GetAsync(Http.Urls.InventarizationExcelUrl);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Urls.InventarizationExcelUrl);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -28,7 +34,6 @@ namespace UpravlenieRC.Client.modules
                 var content = await response.Content.ReadAsByteArrayAsync();
                 var fileName = response.Content.Headers.ContentDisposition?.FileName ?? "test.xlsx";
 
-                // Папка «Загрузки» текущего пользователя
                 var downloadsPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
                 var fullPath = Path.Combine(downloadsPath, fileName);
 

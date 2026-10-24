@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UpravlenieRC.Server.DTO;
@@ -8,6 +9,7 @@ namespace UpravlenieRC.Server.Controllers
 {
     [Route("api/charts")]
     [ApiController]
+    [Authorize(Roles = "Администратор, Менеджер закупок")]
     public class ChartsController : ControllerBase
     {
         private readonly ChartsService _service;

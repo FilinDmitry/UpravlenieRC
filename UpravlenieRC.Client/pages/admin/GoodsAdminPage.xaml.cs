@@ -88,6 +88,10 @@ namespace UpravlenieRC.Client.pages.admin
                 MessageBox.Show("Поля температуры заполнены не верно");
                 return;
             }
+            if (price < 0)
+            {
+                MessageBox.Show("Цена не может быть меньше 0");
+            }
             if (_minTemp != 500)
             {
                 minTemp = _minTemp;

@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UpravlenieRC.Server.DTO;
@@ -8,6 +9,7 @@ namespace UpravlenieRC.Server.Controllers
 {
     [Route("api/Arrival")]
     [ApiController]
+    [Authorize(Roles = "Партнер")]
     public class ArrivalController : ControllerBase
     {
         ArrivalService _service;
