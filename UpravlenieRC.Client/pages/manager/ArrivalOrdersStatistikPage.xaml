@@ -31,7 +31,7 @@
                 CornerRadius="4"
                 Background="#F5F5F5">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <ItemsControl ItemsSource="{Binding OrdersByDate}">
+                <ItemsControl  ItemsSource="{Binding OrdersByDate}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
@@ -40,6 +40,13 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="6,0">
+                                <TextBlock Text="{Binding Count}"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Top"
+           Margin="0,-24,0,0"
+           FontWeight="Bold"
+           Foreground="Black"
+           FontSize="12"/>
                                 <!-- Столбик -->
                                 <Rectangle Fill="#4A90E2"
                                            Width="24"
@@ -58,13 +65,7 @@
                                            Foreground="#555"/>
 
                                 <!-- Число (над столбиком) -->
-                                <TextBlock Text="{Binding Count}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Top"
-                                           Margin="0,-24,0,0"
-                                           FontWeight="Bold"
-                                           Foreground="Black"
-                                           FontSize="12"/>
+                                
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

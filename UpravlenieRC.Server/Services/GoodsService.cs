@@ -51,7 +51,8 @@ namespace UpravlenieRC.Server.Services
         {
             try
             {
-                Good? goodExisted = await _context.Goods.FirstOrDefaultAsync(i => i.Id == good.Id);
+                Good? goodExisted = await _context.Goods.FirstOrDefaultAsync(i => i.Id == goodId);
+                
                 if (goodId == 0 || goodExisted == null)
                 {
                     if (await _context.TovarCategories.FirstOrDefaultAsync(i => i.Id == good.CategoryID) == null)
@@ -65,6 +66,10 @@ namespace UpravlenieRC.Server.Services
                     if (await _context.Manufacturers.FirstOrDefaultAsync(i => i.Id == good.ManufacturerID) == null)
                     {
                         return new ResponseWithMessage(HttpStatusCode.BadRequest, "Такой производитель не найден");
+                    }
+                    if (await _context.Goods.FirstOrDefaultAsync(i => i.Idmanufacturer == good.ManufacturerID && i.Name == good.Name) != null)
+                    {
+                        return new ResponseWithMessage(HttpStatusCode.Conflict, "Товар с таким именем и производителем уже существует");
                     }
                     Good createdGood = GoodsDTO.CreateGoodFromDTO(good);
                     

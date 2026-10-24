@@ -19,20 +19,7 @@ namespace UpravlenieRC.Server.Controllers
         public async Task<IActionResult> GetGood(int id)
         {
             return Ok(await _service.GetGood(id));
-            /*AuthServiceController response = await _service.Auth(request);
-            switch ((int)response.Code)
-            {
-                case 200:
-                    return Ok(new
-                    {
-                        access_token = response.token,
-                        token_type = "Bearer"
-                    });
-                case 401:
-                    return Unauthorized(response.message);
-                default:
-                    return Problem();
-            }*/
+
         }
         [HttpPut]
         public async Task<IActionResult> CreateGood(GoodsDTO goods)
@@ -48,6 +35,8 @@ namespace UpravlenieRC.Server.Controllers
                     return NotFound(response.message);
                 case 200:
                     return Ok(response.message);
+                case 409:
+                    return Conflict(response.message);
                 default:
                     return Problem();
             }

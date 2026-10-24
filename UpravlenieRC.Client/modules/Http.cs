@@ -78,6 +78,43 @@ namespace UpravlenieRC.Client.modules
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 return response.StatusCode;
             }
+            public static async Task<GoodsViewModel?> GetGood(GoodsNeededInfo? goods)
+            {
+                if (goods == null)
+                {
+                    return null;
+                }
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Urls.GetGood(goods.Id));
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                GoodsViewModel? goodsView = await response.Content.ReadFromJsonAsync<GoodsViewModel>();
+                return goodsView;
+            }
+            public static async Task<HttpStatusCode> ChangeGood(GoodsViewModel good, bool isNew = false)
+            {
+                HttpRequestMessage request;
+                if (isNew)
+                {
+                    request = new HttpRequestMessage(HttpMethod.Put, Urls.CreateGoodUrl);
+                    good.Id = 0;
+                }
+                else
+                {
+                    request = new HttpRequestMessage(HttpMethod.Put, Urls.GetGood(good.Id));
+                }
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", JWTBearer);
+                request.Content = new StringContent(JsonSerializer.Serialize(good), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    MessageBox.Show("Товар успешно создан");
+                }
+                else
+                {
+                    MessageBox.Show(await response.Content.ReadAsStringAsync());
+                }
+                return response.StatusCode;
+            }
         }
         public static class Urls
         {
@@ -88,6 +125,7 @@ namespace UpravlenieRC.Client.modules
             public const string ChangePhoneUrl = BaseUrl + "userUpdateProfile/phone";
             public const string ChangeEmailUrl = BaseUrl + "userUpdateProfile/email";
             public const string GoodsNeededUrl = BaseUrl + "Goods/needed";
+            public const string CreateGoodUrl = BaseUrl + "Goods";
             public const string InventarizationExcelUrl = BaseUrl + "Inventarization";
             public const string GetRolesUrl = RegUrl + "/GetRoles";
             public static string AcceptRegUrl(int id) => RegUrl + "/" + id + "/accept";
