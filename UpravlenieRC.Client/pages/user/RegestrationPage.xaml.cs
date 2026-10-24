@@ -60,19 +60,8 @@ namespace UpravlenieRC.Client.pages
                     return false;
                 }
             }
-            else if (responseCode == System.Net.HttpStatusCode.NotFound)
-            {
-                MessageBox.Show("Компания с таким ИНН не найдена");
-            }
-            else if (responseCode == System.Net.HttpStatusCode.Created)
-            {
-                MessageBox.Show("Запрос на создание успешно отправлен");
-            }
-            else
-            {
-                MessageBox.Show("Непредвиденная ошибка");
-            }
-                return true;
+            
+            return true;
         }
 
 

@@ -106,6 +106,10 @@ namespace UpravlenieRC.Client.modules
             {
                 MessageBox.Show("Заявка успешно создана");
             }
+            else
+            {
+                MessageBox.Show(await response.Content.ReadAsStringAsync());
+            }
             return response.StatusCode;
         }
         public static async Task<HttpStatusCode> ChangeEmailAsync(string email, string password)
